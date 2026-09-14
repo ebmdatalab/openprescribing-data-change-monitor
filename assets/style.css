@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header img {
+    max-width: 650px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #333;
+}
+
+h3 {
+    color: #333;
+    margin-top: 30px;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+table,
+th,
+td {
+    border: 1px solid #333;
+}
+
+th {
+    background-color: #0485d1;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+a {
+    text-decoration: none;
+    color: #0485d1;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Testing report */
+
+.svg-icon {
+    width: 2em;
+    height: 2em;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.svg-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.section-divider {
+    border: none;
+    height: 2px;
+    background-color: #0485d1;
+    margin: 20px 0;
+}

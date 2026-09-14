@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Monthly New Item Report for {{ date }}</title>
+    <link rel="stylesheet" href="{{ stylesheet_url }}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <img src="{{ logo_url }}" alt="OpenPrescribing logo">
+            <h2>Monthly English Prescribing Data New Item Report for {{ date }}</h2>
+        </header>
+
+        <p>
+            This report details items appearing in the English Prescribing Data
+            for {{ date }} that have not previously appeared in the data (from Jan 2014).
+        </p>
+
+        {{ january_alert | safe }}
+
+        <p>
+            <a href="{{ reports_index_url }}">View previous reports</a>
+        </p>
+
+        <h3>New Chemical Substances</h3>
+        <p>Identify "chemical substances" prescribed for the first time</p>
+        {{ chemical_substances | safe }}
+
+        <h3>New BNF Codes</h3>
+        <p>Identify BNF codes used for the first time</p>
+        {{ bnf_codes | safe }}
+
+        <h3>New BNF Descriptions</h3>
+        <p>Identify new descriptions only (not new BNF code)</p>
+        {{ bnf_descriptions | safe }}
+    </div>
+</body>
+</html>
