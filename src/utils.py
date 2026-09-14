@@ -212,11 +212,6 @@ def write_monthly_report_html(chem_subs, bnf_codes, bnf_descriptions, date):
     reports_dir = os.path.join(os.getcwd(), "reports", "epd", "changes")
     os.makedirs(reports_dir, exist_ok=True)
 
-    # Read the base64 image string from the file
-    image_path = os.path.join(os.getcwd(), "src", "base64_image.txt")
-    with open(image_path, "r") as file:
-        base64_image = file.read()
-
     # Create an alert if January data to explain BNF structure changes
     if date[-2:] == '01':
         jan_alert = (
@@ -234,7 +229,7 @@ def write_monthly_report_html(chem_subs, bnf_codes, bnf_descriptions, date):
     # Render the template
     report = template.render(
         date=date,
-        logo_url=base64_image,
+        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-epd-new/main/assets/op_logo.png",
         stylesheet_url=(
             "https://raw.githubusercontent.com/"
             "ebmdatalab/openprescribing-epd-new/main/assets/report.css"
@@ -274,11 +269,6 @@ def generate_list_reports_html():
     reports_dir = os.path.join(os.getcwd(), "reports", "epd", "changes")
     os.makedirs(reports_dir, exist_ok=True)
 
-    # Read the base64 image string from the file
-    image_path = os.path.join(os.getcwd(), "src", "base64_image.txt")
-    with open(image_path, "r") as file:
-        base64_image = file.read()
-
     # Get all HTML report files, excluding the index pages and test reports
     html_files = [
         f
@@ -317,7 +307,7 @@ def generate_list_reports_html():
     # Render the template
     html_content = template.render(
         title="English Prescribing Data - Monthly New Items Reports",
-        logo_url=base64_image,
+        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-epd-new/main/assets/op_logo.png",
         logo_alt="OpenPrescribing logo",
         stylesheet_url=(
             "https://raw.githubusercontent.com/"
@@ -339,18 +329,13 @@ def write_monthly_report_html_scmd(vtms, vmps, date):
     reports_dir = os.path.join(os.getcwd(), "reports", "scmd", "changes")
     os.makedirs(reports_dir, exist_ok=True)
 
-    # Read the base64 image string from the file
-    image_path = os.path.join(os.getcwd(), "src", "base64_image_oph.txt")
-    with open(image_path, "r") as file:
-        base64_image = file.read()
-
     # Load the SCMD report template
     template = template_env.get_template("monthly_report_scmd.html")
 
     # Render the template
     report = template.render(
         date=date,
-        logo_url=base64_image,
+        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-epd-new/main/assets/oph_logo.png",
         stylesheet_url=(
             "https://raw.githubusercontent.com/"
             "ebmdatalab/openprescribing-epd-new/main/assets/report.css"
@@ -384,11 +369,6 @@ def write_monthly_report_html_scmd(vtms, vmps, date):
 def generate_list_reports_html_scmd():
     reports_dir = os.path.join(os.getcwd(), "reports", "scmd", "changes")
     os.makedirs(reports_dir, exist_ok=True)
-
-    # Read the base64 image string from the file
-    image_path = os.path.join(os.getcwd(), "src", "base64_image_oph.txt")
-    with open(image_path, "r") as file:
-        base64_image = file.read()
 
     # Get all HTML report files, excluding the index page
     html_files = [
@@ -426,7 +406,7 @@ def generate_list_reports_html_scmd():
     # Render the template
     html_content = template.render(
         title="Secondary Care Medicines Data - Monthly New Items Reports",
-        logo_url=base64_image,
+        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-epd-new/main/assets/oph_logo.png",
         logo_alt="OpenPrescribing Hospitals logo",
         stylesheet_url=(
             "https://raw.githubusercontent.com/"
