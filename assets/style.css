@@ -103,3 +103,23 @@ a:hover {
 .report-list li {
     margin: 10px 0;
 }
+
+h1 {
+    color: #333;
+}
+
+.report-list ol {
+    padding-left: 25px;
+}
+
+.report-list ol li {
+    margin-bottom: 20px;
+}
+
+.report-list ul {
+    padding-left: 25px;
+}
+
+.report-list a {
+    font-weight: normal;
+}

@@ -8,6 +8,8 @@ from datetime import datetime
 import argparse
 import logging
 
+from build_site import build_site
+
 def validate_yyyymm(value):
     try:
         # Must be exactly six digits and form a valid year+month
@@ -87,9 +89,10 @@ def compare_data(selected_dataset, existing_data_extract, latest_data_extract, d
             utils.write_monthly_report_html(chem_subs, bnf_codes, return_new_desc_only, data_for)
             utils.generate_list_reports_html()
             testing_utils.run_tests(bnf_codes, data_for)
+            return True
         except Exception as e:
             print(f"Error comparing data: {e}")
-            return
+            return False
     elif selected_dataset == 'scmd':
         logging.info("Comparing data for SCMD dataset.")
         try:
@@ -103,9 +106,10 @@ def compare_data(selected_dataset, existing_data_extract, latest_data_extract, d
             utils.write_monthly_report_html_scmd(new_vtms, new_vmps, data_for)
             utils.generate_list_reports_html_scmd()
             #testing_utils.run_tests(new_vmps, data_for)
+            return True
         except Exception as e:
             print(f"Error comparing data: {e}")
-            return
+            return False
     
 def convert_to_yyyymm(date):
     ts = pd.Timestamp(date)
@@ -190,7 +194,10 @@ def update_reports(dataset_id, selected_dataset, month=None):
     if selected_dataset == 'scmd':
         existing_data_extract, latest_data_extract = op_utils.join_vtms(existing_data_extract, latest_data_extract)
     
-    compare_data(selected_dataset, existing_data_extract, latest_data_extract, data_for, exclude_chapters=[])
+    reports_updated = compare_data(selected_dataset, existing_data_extract, latest_data_extract, data_for, exclude_chapters=[])
+
+    if reports_updated:
+        build_site()
 
 
 def main():
