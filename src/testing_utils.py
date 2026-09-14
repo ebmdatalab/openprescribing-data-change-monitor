@@ -5,12 +5,19 @@ import requests
 from bs4 import BeautifulSoup
 import configparser
 
+from jinja2 import Environment, FileSystemLoader
+
 # Read the configuration from config.ini
 config = configparser.ConfigParser()
 config.read('src/config.ini')
 
 # Get the preview_base_url from the DEFAULT section
 preview_base_url = config['DEFAULT'].get('preview_base_url', '').strip()
+
+# Set up Jinja templates
+template_env = Environment(
+    loader=FileSystemLoader("templates")
+)
 
 ###### READ MEASURES FILES ######
 def read_json_files_in_folder(folder_path):

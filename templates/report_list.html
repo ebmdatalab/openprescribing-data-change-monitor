@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ stylesheet_url }}">
+</head>
+
+<body>
+    <div class="container report-list">
+        <header>
+            <img src="{{ logo_url }}" alt="{{ logo_alt }}">
+            <h2>{{ title }}</h2>
+        </header>
+
+        <ul>
+            {% for report in reports %}
+                <li>
+                    <a href="{{ report.url }}">{{ report.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

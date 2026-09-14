@@ -3,12 +3,19 @@ import os
 import configparser
 import re
 
+from jinja2 import Environment, FileSystemLoader
+
 # Read the configuration from config.ini
 config = configparser.ConfigParser()
 config.read('src/config.ini')
 
 # Get the preview_base_url from the DEFAULT section
 preview_base_url = config['DEFAULT'].get('preview_base_url', '').strip()
+
+# Set up Jinja templates
+template_env = Environment(
+    loader=FileSystemLoader("templates")
+)
 
 # tokeniser for arbitrary tails (letters, digits, other)
 _token_re = re.compile(r'\d+|[A-Za-z]+|[^A-Za-z0-9]+')
@@ -205,392 +212,234 @@ def write_monthly_report_html(chem_subs, bnf_codes, bnf_descriptions, date):
     reports_dir = os.path.join(os.getcwd(), "reports", "epd", "changes")
     os.makedirs(reports_dir, exist_ok=True)
 
+    # Read the base64 image string from the file
     image_path = os.path.join(os.getcwd(), "src", "base64_image.txt")
     with open(image_path, "r") as file:
         base64_image = file.read()
 
     # Create an alert if January data to explain BNF structure changes
     if date[-2:] == '01':
-        jan_alert = f'<p><b>Please note:</b> January data often includes a larger number of "changes" as BNF structure changes are generally made in January data - <a href="https://www.nhsbsa.nhs.uk/bnf-code-changes-january-{date[:4]}">more information here</a></p>'
+        jan_alert = (
+            f'<p><b>Please note:</b> January data often includes a larger number '
+            f'of "changes" as BNF structure changes are generally made in January '
+            f'data - <a href="https://www.nhsbsa.nhs.uk/bnf-code-changes-january-{date[:4]}">'
+            f'more information here</a></p>'
+        )
     else:
         jan_alert = ''
 
-    # Write a function to generate the HTML report
-    report = f"""
-    <html>
-    <head>
-    <title>Monthly New Item Report for {date}</title>
-    <style>
-        body {{
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 20px;
-            color: #333;
-        }}
-        .container {{
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }}
-        header {{
-            text-align: center;
-            margin-bottom: 40px;
-        }}
-        header img {{
-            max-width: 650px;
-            margin-bottom: 10px;
-        }}
-        h2 {{
-            color: #333;
-        }}
-        h3 {{
-            color: #333;
-            margin-top: 30px;
-        }}
-        p {{
-            margin-bottom: 15px;
-        }}
-        table {{
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }}
-        table, th, td {{
-            border: 1px solid #333;
-        }}
-        th {{
-            background-color: #0485d1;
-            color: white;
-            padding: 10px;
-            text-align: left;
-        }}
-        td {{
-            padding: 8px;
-            text-align: left;
-        }}
-        tr:nth-child(even) {{
-            background-color: #f2f2f2;
-        }}
-        a {{
-            text-decoration: none;
-            color: #0485d1;
-        }}
-        a:hover {{
-            text-decoration: underline;
-        }}
-    </style>
-    </head>
-    <body>
-    <div class="container">
-        <header>
-            <img src="{base64_image}" alt="OpenPrescribing logo">
-            <h2>Monthly English Prescribing Data New Item Report for {date}</h2>
-        </header>
-        <p>This report details items appearing in the English Prescribing Data for {date} that have not previously appeared in the data (from Jan 2014).</p>
-        {jan_alert}
-        <p><a href="{preview_base_url}url=https://github.com/ebmdatalab/openprescribing-epd-new/blob/main/reports/epd/changes/list_reports.html">View previous reports</a></p>
-        
-        <h3>New Chemical Substances</h3>
-        <p>Identify "chemical substances" prescribed for the first time</p>
-        {chem_subs.to_html(index=False, classes='table')}
-        
-        <h3>New BNF Codes</h3>
-        <p>Identify BNF codes used for the first time</p>
-        {bnf_codes.to_html(index=False, classes='table')}
-        
-        <h3>New BNF Descriptions</h3>
-        <p>Identify new descriptions only (not new BNF code)</p>
-        {bnf_descriptions.to_html(index=False, classes='table')}
-    </div>
-    </body>
-    </html>
-    """
+    # Load the EPD report template
+    template = template_env.get_template("monthly_report_epd.html")
 
-    # Write the report to a file
-    with open(f"{reports_dir}/monthly_report_{date}.html", "w") as file:
+    # Render the template
+    report = template.render(
+        date=date,
+        logo_url=base64_image,
+        stylesheet_url=(
+            "https://raw.githubusercontent.com/"
+            "ebmdatalab/openprescribing-epd-new/main/assets/report.css"
+        ),
+        reports_index_url=(
+            f"{preview_base_url}"
+            "url=https://github.com/ebmdatalab/openprescribing-epd-new/"
+            "blob/main/reports/epd/changes/list_reports.html"
+        ),
+        january_alert=jan_alert,
+        chemical_substances=chem_subs.to_html(
+            index=False,
+            classes="table"
+        ),
+        bnf_codes=bnf_codes.to_html(
+            index=False,
+            classes="table"
+        ),
+        bnf_descriptions=bnf_descriptions.to_html(
+            index=False,
+            classes="table"
+        ),
+    )
+
+    # Write the rendered report
+    output_path = os.path.join(
+        reports_dir,
+        f"monthly_report_{date}.html"
+    )
+
+    with open(output_path, "w") as file:
         file.write(report)
 
-    print(f"Report written to {reports_dir}/monthly_report_{date}.html")
+    print(f"Report written to {output_path}")
 
 def generate_list_reports_html():
     reports_dir = os.path.join(os.getcwd(), "reports", "epd", "changes")
-    
+    os.makedirs(reports_dir, exist_ok=True)
+
     # Read the base64 image string from the file
     image_path = os.path.join(os.getcwd(), "src", "base64_image.txt")
     with open(image_path, "r") as file:
         base64_image = file.read()
 
-    # Get all HTML files in the directory, except list_reports.html
-    html_files = [f for f in os.listdir(reports_dir) if f.endswith('.html') and f != 'list_reports.html' and f != 'list_test_reports.html' and not f.startswith('monthly_test_report')]
+    # Get all HTML report files, excluding the index pages and test reports
+    html_files = [
+        f
+        for f in os.listdir(reports_dir)
+        if (
+            f.endswith(".html")
+            and f != "list_reports.html"
+            and f != "list_test_reports.html"
+            and not f.startswith("monthly_test_report")
+        )
+    ]
 
-    # Start the HTML content with the Base64 logo embedded in the header
-    html_content = f"""
-    <html>
-    <head>
-    <title>English Prescribing Data - Monthly New Items Reports</title>
-    <style>
-        body {{
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 20px;
-        }}
-        a {{
-            text-decoration: none;
-            color: #0485d1;
-        }}
-        a:hover {{
-            text-decoration: underline;
-        }}
-        h2 {{
-            color: #333;
-        }}
-        li {{
-            margin: 10px 0;
-        }}
-        header {{
-            text-align: center;
-            margin-bottom: 40px;
-        }}
-        header img {{
-            max-width: 650px;
-            margin-bottom: 10px;
-        }}
-        .container {{
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }}
-    </style>
-    </head>
-    <body>
-    <div class="container">
-        <header>
-            <img src="{base64_image}" alt="OpenPrescribing logo">
-            <h2>English Prescribing Data - Monthly New Items Reports</h2>
-        </header>
-        <ul>
-    """
-
-    # Function to extract the date portion (YYYY-MM) for sorting
+    # Extract date from filename for sorting
     def extract_date(filename):
-        # Split by underscores and get the last part, then remove '.html'
-        date_part = filename.split('_')[-1].replace('.html', '')
+        date_part = filename.split("_")[-1].replace(".html", "")
         return date_part
 
-    # Sort the list using the extracted date as the key so the index page appears in correct order
+    # Sort reports chronologically
     html_files = sorted(html_files, key=extract_date)
 
-    # Add links to all HTML files
+    # Build data for the template
+    reports = []
+
     for html_file in html_files:
-        title = os.path.splitext(html_file)[0]
-        # Create title for month and year
-        title = title.split('_')[-1]
-        title = pd.to_datetime(title).strftime('%B %Y')
-        link = f"{preview_base_url}https://github.com/ebmdatalab/openprescribing-epd-new/blob/main/reports/epd/changes/{html_file}"
-        html_content += f'<li><a href="{link}">{title}</a></li>\n'
+        date_part = os.path.splitext(html_file)[0].split("_")[-1]
+        title = pd.to_datetime(date_part).strftime("%B %Y")
 
-    # End the HTML content
-    html_content += """
-    </ul>
-    </div>
-    </body>
-    </html>
-    """
+        reports.append({
+            "title": title,
+            "url": html_file,
+        })
 
-    # Write the HTML content to list_reports.html
-    with open(os.path.join(reports_dir, 'list_reports.html'), 'w') as f:
-        f.write(html_content)
+    # Load the template
+    template = template_env.get_template("report_list.html")
+
+    # Render the template
+    html_content = template.render(
+        title="English Prescribing Data - Monthly New Items Reports",
+        logo_url=base64_image,
+        logo_alt="OpenPrescribing logo",
+        stylesheet_url=(
+            "https://raw.githubusercontent.com/"
+            "ebmdatalab/openprescribing-epd-new/main/assets/report.css"
+        ),
+        reports=reports,
+    )
+
+    # Write the index page
+    output_path = os.path.join(
+        reports_dir,
+        "list_reports.html"
+    )
+
+    with open(output_path, "w") as file:
+        file.write(html_content)
 
 def write_monthly_report_html_scmd(vtms, vmps, date):
     reports_dir = os.path.join(os.getcwd(), "reports", "scmd", "changes")
     os.makedirs(reports_dir, exist_ok=True)
 
+    # Read the base64 image string from the file
     image_path = os.path.join(os.getcwd(), "src", "base64_image_oph.txt")
     with open(image_path, "r") as file:
         base64_image = file.read()
 
-    report = f"""
-    <html>
-    <head>
-    <title>Monthly New Item Report (SCMD) for {date}</title>
-    <style>
-        body {{
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 20px;
-            color: #333;
-        }}
-        .container {{
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }}
-        header {{
-            text-align: center;
-            margin-bottom: 40px;
-        }}
-        header img {{
-            max-width: 650px;
-            margin-bottom: 10px;
-        }}
-        h2 {{
-            color: #333;
-        }}
-        h3 {{
-            color: #333;
-            margin-top: 30px;
-        }}
-        p {{
-            margin-bottom: 15px;
-        }}
-        table {{
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }}
-        table, th, td {{
-            border: 1px solid #333;
-        }}
-        th {{
-            background-color: #0485d1;
-            color: white;
-            padding: 10px;
-            text-align: left;
-        }}
-        td {{
-            padding: 8px;
-            text-align: left;
-        }}
-        tr:nth-child(even) {{
-            background-color: #f2f2f2;
-        }}
-        a {{
-            text-decoration: none;
-            color: #0485d1;
-        }}
-        a:hover {{
-            text-decoration: underline;
-        }}
-    </style>
-    </head>
-    <body>
-    <div class="container">
-        <header>
-            <img src="{base64_image}" alt="OpenPrescribing logo">
-            <h2>Monthly Secondary Care Medicines Data New Item Report for {date}</h2>
-        </header>
-        <p>This report details items appearing in the Secondary Care Medicines Data for {date} that have not previously appeared in the data.</p>
-        <p><a href="{preview_base_url}url=https://github.com/ebmdatalab/openprescribing-epd-new/blob/main/reports/scmd/changes/list_reports_scmd.html">View previous reports</a></p>
+    # Load the SCMD report template
+    template = template_env.get_template("monthly_report_scmd.html")
 
-        <h3>New VTMs</h3>
-        <p>Virtual Therapeutic Moieties appearing in SCMD for the first time</p>
-        {vtms.to_html(index=False, classes='table')}
+    # Render the template
+    report = template.render(
+        date=date,
+        logo_url=base64_image,
+        stylesheet_url=(
+            "https://raw.githubusercontent.com/"
+            "ebmdatalab/openprescribing-epd-new/main/assets/report.css"
+        ),
+        reports_index_url=(
+            f"{preview_base_url}"
+            "url=https://github.com/ebmdatalab/openprescribing-epd-new/"
+            "blob/main/reports/scmd/changes/list_reports_scmd.html"
+        ),
+        vtms=vtms.to_html(
+            index=False,
+            classes="table"
+        ),
+        vmps=vmps.to_html(
+            index=False,
+            classes="table"
+        ),
+    )
 
-        <h3>New VMPs</h3>
-        <p>Virtual Medicinal Products appearing in SCMD for the first time</p>
-        {vmps.to_html(index=False, classes='table')}
-    </div>
-    </body>
-    </html>
-    """
+    # Write the rendered report
+    output_path = os.path.join(
+        reports_dir,
+        f"monthly_report_scmd_{date}.html"
+    )
 
-    with open(f"{reports_dir}/monthly_report_scmd_{date}.html", "w") as file:
+    with open(output_path, "w") as file:
         file.write(report)
 
-    print(f"Report written to {reports_dir}/monthly_report_scmd_{date}.html")
-
+    print(f"Report written to {output_path}")
 
 def generate_list_reports_html_scmd():
     reports_dir = os.path.join(os.getcwd(), "reports", "scmd", "changes")
+    os.makedirs(reports_dir, exist_ok=True)
 
+    # Read the base64 image string from the file
     image_path = os.path.join(os.getcwd(), "src", "base64_image_oph.txt")
     with open(image_path, "r") as file:
         base64_image = file.read()
 
+    # Get all HTML report files, excluding the index page
     html_files = [
-        f for f in os.listdir(reports_dir)
-        if f.endswith('.html') and f != 'list_reports_scmd.html'
+        f
+        for f in os.listdir(reports_dir)
+        if (
+            f.endswith(".html")
+            and f != "list_reports_scmd.html"
+        )
     ]
 
+    # Extract date from filename for sorting
     def extract_date(filename):
-        date_part = filename.split('_')[-1].replace('.html', '')
+        date_part = filename.split("_")[-1].replace(".html", "")
         return date_part
 
+    # Sort reports chronologically
     html_files = sorted(html_files, key=extract_date)
 
-    html_content = f"""
-    <html>
-    <head>
-    <title>Secondary Care Medicines Data - Monthly New Items Reports</title>
-    <style>
-        body {{
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 20px;
-        }}
-        a {{
-            text-decoration: none;
-            color: #0485d1;
-        }}
-        a:hover {{
-            text-decoration: underline;
-        }}
-        h2 {{
-            color: #333;
-        }}
-        li {{
-            margin: 10px 0;
-        }}
-        header {{
-            text-align: center;
-            margin-bottom: 40px;
-        }}
-        header img {{
-            max-width: 650px;
-            margin-bottom: 10px;
-        }}
-        .container {{
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }}
-    </style>
-    </head>
-    <body>
-    <div class="container">
-        <header>
-            <img src="{base64_image}" alt="OpenPrescribing logo">
-            <h2>Secondary Care Medicines Data - Monthly New Items Reports</h2>
-        </header>
-        <ul>
-    """
+    # Build data for the template
+    reports = []
 
     for html_file in html_files:
-        title = os.path.splitext(html_file)[0].split('_')[-1]
-        title = pd.to_datetime(title).strftime('%B %Y')
-        link = f"{preview_base_url}https://github.com/ebmdatalab/openprescribing-epd-new/blob/main/reports/scmd/changes/{html_file}"
-        html_content += f'<li><a href="{link}">{title}</a></li>\n'
+        date_part = os.path.splitext(html_file)[0].split("_")[-1]
+        title = pd.to_datetime(date_part).strftime("%B %Y")
 
-    html_content += """
-        </ul>
-    </div>
-    </body>
-    </html>
-    """
+        reports.append({
+            "title": title,
+            "url": html_file,
+        })
 
-    with open(os.path.join(reports_dir, 'list_reports_scmd.html'), 'w') as f:
-        f.write(html_content)
+    # Load the template
+    template = template_env.get_template("report_list.html")
+
+    # Render the template
+    html_content = template.render(
+        title="Secondary Care Medicines Data - Monthly New Items Reports",
+        logo_url=base64_image,
+        logo_alt="OpenPrescribing Hospitals logo",
+        stylesheet_url=(
+            "https://raw.githubusercontent.com/"
+            "ebmdatalab/openprescribing-epd-new/main/assets/report.css"
+        ),
+        reports=reports,
+    )
+
+    # Write the index page
+    output_path = os.path.join(
+        reports_dir,
+        "list_reports_scmd.html"
+    )
+
+    with open(output_path, "w") as file:
+        file.write(html_content)

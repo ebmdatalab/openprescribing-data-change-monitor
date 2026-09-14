@@ -95,3 +95,11 @@ a:hover {
     background-color: #0485d1;
     margin: 20px 0;
 }
+
+.report-list {
+    max-width: 800px;
+}
+
+.report-list li {
+    margin: 10px 0;
+}
