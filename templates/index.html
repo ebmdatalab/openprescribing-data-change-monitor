@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>OpenPrescribing English Prescribing Data Change Detector</title>
+    <title>OpenPrescribing Data Change Monitor</title>
     <link rel="stylesheet" href="{{ stylesheet_url }}">
 </head>
 
@@ -10,102 +10,97 @@
     <div class="container report-list">
         <header>
             <img src="{{ logo_url }}" alt="OpenPrescribing logo">
-
-            <h1>
-                OpenPrescribing English Prescribing Data Change Detector
-            </h1>
+            <h1>OpenPrescribing Data Change Monitor</h1>
         </header>
 
         <p>
-            The <strong>OpenPrescribing English Prescribing Data Change Detector</strong>
-            is a tool designed to identify new or altered items in the
-            <a href="https://www.nhsbsa.nhs.uk/prescription-data/prescribing-data/english-prescribing-data-epd">
-                English Prescribing Data
-            </a>
-            published by the NHS Business Services Authority.
+            The <strong>OpenPrescribing Data Change Monitor</strong> identifies
+            new or changed items in newly published prescribing data and
+            highlights changes that may affect OpenPrescribing.
         </p>
 
-        <h2>New Items Reports</h2>
+        <h2>Primary care</h2>
+
+        <h3>English Prescribing Data (EPD)</h3>
 
         <p>
-            Our New Items Reports provide detailed information in three key sections:
+            The monthly change reports identify:
         </p>
 
-        <ol>
+        <ul>
             <li>
-                <strong>New or Changed Chemical Substance Descriptions</strong>
-                <p>
-                    For example, a new drug being prescribed in primary care
-                    for the first time (mostly) or an existing chemical
-                    substance description changing (rarely).
-                </p>
+                <strong>New or changed chemical substance descriptions</strong>
+                <br>
+                For example, a new drug being prescribed in primary care
+                for the first time, or an existing chemical substance
+                description changing.
             </li>
 
             <li>
-                <strong>New or Changed BNF Codes</strong>
-                <p>
-                    For example, a new drug or new formulation/strength of an
-                    existing drug being prescribed in primary care for the
-                    first time (mostly) or an existing BNF code changing
-                    (occasionally).
-                </p>
+                <strong>New or changed BNF codes</strong>
+                <br>
+                For example, a new drug or new formulation or strength
+                of an existing drug being prescribed in primary care
+                for the first time, or an existing BNF code changing.
             </li>
 
             <li>
-                <strong>New or Changed BNF Descriptions</strong>
-                <p>
-                    For example, updated or modified descriptions of existing items.
-                </p>
+                <strong>New or changed BNF descriptions</strong>
+                <br>
+                For example, updated or modified descriptions of
+                existing items.
             </li>
-        </ol>
+        </ul>
 
         <p>
             <a href="epd/changes/">
-                View English Prescribing Data New Items Reports
+                View EPD change reports
             </a>
         </p>
 
-        <h2>Secondary Care Medicines Data</h2>
+        <h2>Secondary care</h2>
+
+        <h3>Secondary Care Medicines Data (SCMD)</h3>
 
         <p>
-            Our SCMD New Items Reports provide detailed information in two key sections:
+            The monthly change reports identify:
         </p>
 
-        <ol>
+        <ul>
             <li>
                 <strong>New Virtual Therapeutic Moieties (VTMs)</strong>
-                <p>
-                    For example, a new therapeutic moiety appearing in
-                    secondary care medicines data for the first time.
-                </p>
+                <br>
+                For example, a new therapeutic moiety appearing in
+                secondary care medicines data for the first time.
             </li>
 
             <li>
                 <strong>New Virtual Medicinal Products (VMPs)</strong>
-                <p>
-                    For example, a new medicinal product or formulation
-                    appearing in secondary care medicines data for the first time.
-                </p>
+                <br>
+                For example, a new medicinal product or formulation
+                appearing in secondary care medicines data for the
+                first time.
             </li>
-        </ol>
+        </ul>
 
         <p>
             <a href="scmd/changes/">
-                View Secondary Care Medicines Data New Items Reports
+                View SCMD change reports
             </a>
         </p>
 
-        <h2>OpenPrescribing Tests</h2>
+        <h2>OpenPrescribing measure tests</h2>
 
         <p>
-            Our OpenPrescribing Tests Reports enable us to identify new items
-            that may impact our existing measures, helping to ensure the
-            accuracy and relevance of our prescribing tools.
+            New items in English Prescribing Data are checked against
+            OpenPrescribing measures to identify changes that may require
+            review. These tests help to ensure the accuracy and relevance
+            of OpenPrescribing's prescribing tools.
         </p>
 
         <p>
             <a href="epd/tests/">
-                View OpenPrescribing Tests Reports
+                View measure test reports
             </a>
         </p>
     </div>
