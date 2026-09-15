@@ -1,16 +1,8 @@
 import pandas as pd
 import os
-import configparser
 import re
 
 from jinja2 import Environment, FileSystemLoader
-
-# Read the configuration from config.ini
-config = configparser.ConfigParser()
-config.read('src/config.ini')
-
-# Get the preview_base_url from the DEFAULT section
-preview_base_url = config['DEFAULT'].get('preview_base_url', '').strip()
 
 # Set up Jinja templates
 template_env = Environment(
@@ -229,16 +221,12 @@ def write_monthly_report_html(chem_subs, bnf_codes, bnf_descriptions, date):
     # Render the template
     report = template.render(
         date=date,
-        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-epd-new/main/assets/op_logo.png",
+        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/op_logo.png",
         stylesheet_url=(
             "https://raw.githubusercontent.com/"
-            "ebmdatalab/openprescribing-epd-new/main/assets/report.css"
+            "ebmdatalab/openprescribing-data-change-monitor/main/assets/report.css"
         ),
-        reports_index_url=(
-            f"{preview_base_url}"
-            "url=https://github.com/ebmdatalab/openprescribing-epd-new/"
-            "blob/main/reports/epd/changes/list_reports.html"
-        ),
+        reports_index_url="index.html",
         january_alert=jan_alert,
         chemical_substances=chem_subs.to_html(
             index=False,
@@ -307,11 +295,11 @@ def generate_list_reports_html():
     # Render the template
     html_content = template.render(
         title="English Prescribing Data - Monthly New Items Reports",
-        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-epd-new/main/assets/op_logo.png",
+        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/op_logo.png",
         logo_alt="OpenPrescribing logo",
         stylesheet_url=(
             "https://raw.githubusercontent.com/"
-            "ebmdatalab/openprescribing-epd-new/main/assets/report.css"
+            "ebmdatalab/openprescribing-data-change-monitor/main/assets/report.css"
         ),
         reports=reports,
     )
@@ -335,16 +323,12 @@ def write_monthly_report_html_scmd(vtms, vmps, date):
     # Render the template
     report = template.render(
         date=date,
-        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-epd-new/main/assets/oph_logo.png",
+        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/oph_logo.png",
         stylesheet_url=(
             "https://raw.githubusercontent.com/"
-            "ebmdatalab/openprescribing-epd-new/main/assets/report.css"
+            "ebmdatalab/openprescribing-data-change-monitor/main/assets/report.css"
         ),
-        reports_index_url=(
-            f"{preview_base_url}"
-            "url=https://github.com/ebmdatalab/openprescribing-epd-new/"
-            "blob/main/reports/scmd/changes/list_reports_scmd.html"
-        ),
+        reports_index_url="index.html",
         vtms=vtms.to_html(
             index=False,
             classes="table"
@@ -406,11 +390,11 @@ def generate_list_reports_html_scmd():
     # Render the template
     html_content = template.render(
         title="Secondary Care Medicines Data - Monthly New Items Reports",
-        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-epd-new/main/assets/oph_logo.png",
+        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/oph_logo.png",
         logo_alt="OpenPrescribing Hospitals logo",
         stylesheet_url=(
             "https://raw.githubusercontent.com/"
-            "ebmdatalab/openprescribing-epd-new/main/assets/report.css"
+            "ebmdatalab/openprescribing-data-change-monitor/main/assets/report.css"
         ),
         reports=reports,
     )

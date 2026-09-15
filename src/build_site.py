@@ -5,7 +5,9 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))
+)
 
 REPORTS_DIR = os.path.join(ROOT_DIR, "reports")
 ASSETS_DIR = os.path.join(ROOT_DIR, "assets")
@@ -18,7 +20,7 @@ template_env = Environment(
 
 RAW_GITHUB_BASE = (
     "https://raw.githubusercontent.com/"
-    "ebmdatalab/openprescribing-epd-new/main/assets/"
+    "ebmdatalab/openprescribing-data-change-monitor/main/assets/"
 )
 
 
@@ -43,14 +45,14 @@ def copy_directory_contents(source_dir, destination_dir):
 def copy_html_file(source_path, destination_path):
     """
     Copy an HTML file while replacing temporary external URLs
-    with paths appropriate for the local static website.
+    with paths appropriate for the static site.
     """
     with open(source_path, "r", encoding="utf-8") as file:
         html = file.read()
 
     destination_dir = os.path.dirname(destination_path)
 
-    # Work out where site/assets/ is relative to this HTML file.
+    # Work out the relative path from this HTML file to site/assets/
     relative_assets = os.path.relpath(
         os.path.join(SITE_DIR, "assets"),
         destination_dir,
@@ -58,13 +60,13 @@ def copy_html_file(source_path, destination_path):
 
     asset_prefix = f"{relative_assets}/"
 
-    # Replace CSS URL.
+    # CSS
     html = html.replace(
         f"{RAW_GITHUB_BASE}report.css",
         f"{asset_prefix}report.css",
     )
 
-    # Replace logo URLs.
+    # Logos
     html = html.replace(
         f"{RAW_GITHUB_BASE}op_logo.png",
         f"{asset_prefix}op_logo.png",
@@ -75,35 +77,14 @@ def copy_html_file(source_path, destination_path):
         f"{asset_prefix}oph_logo.png",
     )
 
-    # Replace the old HTMLPreview "View previous reports" URLs.
-    html = html.replace(
-        "https://htmlpreview.github.io/?url="
-        "https://github.com/ebmdatalab/openprescribing-epd-new/"
-        "blob/main/reports/epd/changes/list_reports.html",
-        "index.html",
-    )
-
-    html = html.replace(
-        "https://htmlpreview.github.io/?url="
-        "https://github.com/ebmdatalab/openprescribing-epd-new/"
-        "blob/main/reports/scmd/changes/list_reports_scmd.html",
-        "index.html",
-    )
-
-    html = html.replace(
-        "https://htmlpreview.github.io/?url="
-        "https://github.com/ebmdatalab/openprescribing-epd-new/"
-        "blob/main/reports/epd/tests/list_test_reports.html",
-        "index.html",
-    )
-
     os.makedirs(destination_dir, exist_ok=True)
 
     with open(destination_path, "w", encoding="utf-8") as file:
         file.write(html)
 
+
 def copy_reports():
-    """Copy reports into site/, rewriting HTML asset URLs."""
+    """Copy reports into site/, rewriting HTML asset and navigation URLs."""
     for root, dirs, files in os.walk(REPORTS_DIR):
         relative_root = os.path.relpath(root, REPORTS_DIR)
 
@@ -204,7 +185,7 @@ def build_report_list_page(
 
     output_directory = os.path.dirname(output_path)
 
-    # Calculate the relative path from this index page to site/assets/.
+    # Calculate relative path from the list page to site/assets/.
     relative_assets = os.path.relpath(
         os.path.join(SITE_DIR, "assets"),
         output_directory,
@@ -229,6 +210,7 @@ def build_report_list_page(
 def build_report_list_pages():
     """Generate EPD, EPD test and SCMD report index pages."""
 
+    # EPD change reports
     build_report_list_page(
         source_directory=os.path.join(
             SITE_DIR,
@@ -246,6 +228,7 @@ def build_report_list_pages():
         logo_alt="OpenPrescribing logo",
     )
 
+    # EPD test reports
     build_report_list_page(
         source_directory=os.path.join(
             SITE_DIR,
@@ -263,6 +246,7 @@ def build_report_list_pages():
         logo_alt="OpenPrescribing logo",
     )
 
+    # SCMD change reports
     build_report_list_page(
         source_directory=os.path.join(
             SITE_DIR,
@@ -296,7 +280,7 @@ def build_site():
         os.path.join(SITE_DIR, "assets"),
     )
 
-    # Copy reports and rewrite their asset URLs.
+    # Copy reports and rewrite their asset/navigation URLs.
     copy_reports()
 
     # Generate website pages.
