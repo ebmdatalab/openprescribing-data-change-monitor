@@ -1,0 +1,27 @@
+BNF_CODE,BNF_DESCRIPTION,CHEMICAL_SUBSTANCE_BNF_DESCR
+0302000ABAAAAAA,Beclometasone 100microg/Formoterol 6microg/dose dry pdr inh,BeclometDiprop/Formoterol
+0302000ABAAABAB,Beclometasone 100microg/Formoterol 6microg/dose inh CFC free,BeclometDiprop/Formoterol
+0302000ABAAACAC,Beclometasone 200microg/Formoterol 6microg/dose dry pdr inh,BeclometDiprop/Formoterol
+0302000ABAAADAD,Beclometasone 200microg/Formoterol 6microg/dose inh CFC free,BeclometDiprop/Formoterol
+0302000ABBBAAAA,Fostair NEXThaler 100microg/dose / 6microg/dose dry pdr inh,BeclometDiprop/Formoterol
+0302000ABBBABAC,Fostair NEXThaler 200microg/dose / 6microg/dose dry pdr inh,BeclometDiprop/Formoterol
+0302000ABBCAAAB,Fostair 100micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBCABAD,Fostair 200micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBDAAAB,Bibecfo 100micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBDABAD,Bibecfo 200micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBEAAAB,Proxor 100micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBEABAD,Proxor 200micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBFAAAB,Luforbec 100micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBFABAD,Luforbec 200micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBGAAAB,Vivaire 100micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBGABAD,Vivaire 200micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0503010BABBABAB,Genvoya 150mg/150mg/200mg/10mg tablets,Elvitegravir/Cobicistat/Emtricitabine/Tenofovir alafenamide
+0503010BBBBAAAA,Eviplera 200mg/25mg/245mg tablets,Emtricitabine/Rilpivirine/Tenofovir disoproxil
+0503010BCBBAAAA,Odefsey 200mg/25mg/25mg tablets,Emtricitabine/Rilpivirine/Tenofovir alafenamide
+0913209B0BBAAAA,GA express plus 15 oral powder 25g sachets,Powder 15g protein equivalent
+0913311K0BBABAB,Aymes 2.0kcal liquid (3 flavours),"RtS 2-2.4 kcal/ml m/sk higher protein,higher energy(0913311)"
+0913311L0BBAAAA,Fresubin Powder Extra oral powder 62g sachets chocolate,Powder 1.6 kcal/ml milkshake (0913311)
+0913311L0BBADAA,Fresubin Powder Extra oral powder 62g sachets vanilla,Powder 1.6 kcal/ml milkshake (0913311)
+0913353A0BCAAAB,SMA Soya powder,Powder discontinued soya based formula (0913353)
+0914011T0BBAAAA,Nutrison Bolus Energy HP liquid,Tube feed 1.6kcal/ml higher protein (0914011)
+0914061C0BBAAAA,Nutrison Concentrated liquid,Tube feed non ACBS 2kcal/ml higher protein(0914061)

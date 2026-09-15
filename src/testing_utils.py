@@ -3,14 +3,13 @@ import os
 import json
 import requests
 from bs4 import BeautifulSoup
-import configparser
 
-# Read the configuration from config.ini
-config = configparser.ConfigParser()
-config.read('src/config.ini')
+from jinja2 import Environment, FileSystemLoader
 
-# Get the preview_base_url from the DEFAULT section
-preview_base_url = config['DEFAULT'].get('preview_base_url', '').strip()
+# Set up Jinja templates
+template_env = Environment(
+    loader=FileSystemLoader("templates")
+)
 
 ###### READ MEASURES FILES ######
 def read_json_files_in_folder(folder_path):
@@ -257,244 +256,171 @@ def measures_filter(df, measure_data):
     
 ####### HTML REPORT CREATION #######
 
-def write_monthly_testing_report_html(triggered_tests, passed_tests, testing_false, testing_none, date):
+def write_monthly_testing_report_html(
+    triggered_tests,
+    passed_tests,
+    testing_false,
+    testing_none,
+    date
+):
     reports_dir = os.path.join(os.getcwd(), "reports", "epd", "tests")
     os.makedirs(reports_dir, exist_ok=True)
 
     # Create an alert if January data to explain BNF structure changes
-    jan_alert = ''
     if date[-2:] == '01':
         jan_alert = (
-            f'<p><b>Please note:</b> January data often includes a larger number of "changes" as BNF structure changes are generally made in January data - '
-            f'<a href="https://www.nhsbsa.nhs.uk/bnf-code-changes-january-{date[:4]}">more information here</a></p>'
+            f'<p><b>Please note:</b> January data often includes a larger number '
+            f'of "changes" as BNF structure changes are generally made in January '
+            f'data - <a href="https://www.nhsbsa.nhs.uk/bnf-code-changes-january-{date[:4]}">'
+            f'more information here</a></p>'
         )
-
-    # Read the base64 image string from the file
-    image_path = os.path.join(os.getcwd(), "src", "base64_image.txt")
-    with open(image_path, "r") as file:
-        base64_image = file.read()
-
-    tick_svg = '<span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="#15b01a" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></span>'
-    question_svg = '<span class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="#f97306" class="bi bi-question-lg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14"/></svg></span>'
-    # Start the HTML report
-    report = f"""
-    <html>
-    <head>
-    <title>Monthly OpenPrescribing Testing Report for {date}</title>
-    <style>
-        body {{
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 20px;
-            color: #333;
-        }}
-        .container {{
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }}
-        header {{
-            text-align: center;
-            margin-bottom: 40px;
-        }}
-        header img {{
-            max-width: 650px;
-            margin-bottom: 10px;
-        }}
-        h2 {{
-            color: #333;
-        }}
-        h3 {{
-            color: #333;
-            margin-top: 30px;
-        }}
-        p {{
-            margin-bottom: 15px;
-        }}
-        table {{
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }}
-        table, th, td {{
-            border: 1px solid #333;
-        }}
-        th {{
-            background-color: #0485d1;
-            color: white;
-            padding: 10px;
-            text-align: left;
-        }}
-        td {{
-            padding: 8px;
-            text-align: left;
-        }}
-        tr:nth-child(even) {{
-            background-color: #f2f2f2;
-        }}
-        a {{
-            text-decoration: none;
-            color: #0485d1;
-        }}
-        a:hover {{
-            text-decoration: underline;
-        }}
-        .svg-icon {{
-            width: 2em;
-            height: 2em;
-            vertical-align: middle;
-            display: inline-block;
-        }}
-    </style>
-    </head>
-    <body>
-    <div class="container">
-        <header>
-            <img src="{base64_image}" alt="OpenPrescribing logo">
-            <h2>Monthly Testing Report for {date}</h2>
-        </header>
-        <p>This report details testing results for OpenPrescribing measures which have the flag testing_measure = true. Items appearing in the English Prescribing Data for {date} that have not previously appeared in the data (from Jan 2014).</p>
-        {jan_alert}
-        <p><a href="{preview_base_url}https://github.com/ebmdatalab/openprescribing-epd-new/blob/main/reports/epd/tests/list_test_reports.html">View previous reports</a></p>
-    """
-
-    # Check if there are any triggered tests
-    if len(triggered_tests) == 0:
-        report += "<h3>All tests passed</h3>"
     else:
-        report += "<h2>Measures to check:</h2>"
-        for item in triggered_tests:
-            report += f"<a href='https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/{item['title']}'><h3>{item['title']} {question_svg}</h3></a>"
-            report += f"<p>{item['comments']}</p>"
-            df = item['data'][["BNF_CODE", "BNF_DESCRIPTION", "CHEMICAL_SUBSTANCE_BNF_DESCR"]]
-            report += f"<p>{df.to_html(index=False, classes='table')}</p>"
-        report += "<h2>Tests passed:</h2>"
-        if len(passed_tests) == 0:
-            report += "<p>No passed tests</p>"
-        else:
-            for item in passed_tests:
-                report += f"<p><a href='https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/{item['title']}'>{item['title']}</a> {tick_svg}</p>"
-        if len(testing_false) > 0 or len(testing_none) > 0:
-            report += '<hr style="border: none; height: 2px; background-color: #0485d1; margin: 20px 0;">'
-            report += "<h2>Other measures</h2>"
-            if len(testing_false) > 0:
-                report += "<h3>Measures with testing disabled</h3>"
-                for item in testing_false:
-                    report += f"<p><a href='https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/{item['filename']}.json'>{item['filename']}</a></p>"
-            if len(testing_none) > 0:
-                report += "<h3>Measures without testing information</h3>"
-                for item in testing_none:
-                    report += f"<p><a href='https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/{item['filename']}.json'>{item['filename']}</a></p>"
+        jan_alert = ''
 
-    report += """
-    </div>
-    </body>
-    </html>
-    """
+    # Prepare the triggered test data for the template
+    triggered_tests_for_template = []
 
-    # Write the report to a file
-    with open(f"{reports_dir}/monthly_test_report_{date}.html", "w") as file:
+    for item in triggered_tests:
+        df = item["data"][
+            [
+                "BNF_CODE",
+                "BNF_DESCRIPTION",
+                "CHEMICAL_SUBSTANCE_BNF_DESCR",
+            ]
+        ]
+
+        triggered_tests_for_template.append({
+            "title": item["title"],
+            "comments": item["comments"],
+            "table": df.to_html(
+                index=False,
+                classes="table"
+            ),
+        })
+
+    # Prepare the passed test data for the template
+    passed_tests_for_template = []
+
+    for item in passed_tests:
+        passed_tests_for_template.append({
+            "title": item["title"],
+        })
+
+    # Prepare the disabled test data for the template
+    testing_false_for_template = []
+
+    for item in testing_false:
+        testing_false_for_template.append({
+            "filename": item["filename"],
+        })
+
+    # Prepare the tests without testing information
+    testing_none_for_template = []
+
+    for item in testing_none:
+        testing_none_for_template.append({
+            "filename": item["filename"],
+        })
+
+    # Load the Jinja template
+    template = template_env.get_template("monthly_report_epd_tests.html")
+
+    # Base URL for measure definition links
+    measure_base_url = (
+        "https://github.com/ebmdatalab/openprescribing/"
+        "tree/main/openprescribing/measures/definitions"
+    )
+
+    # URL for the shared stylesheet
+    stylesheet_url = (
+        "https://raw.githubusercontent.com/"
+        "ebmdatalab/openprescribing-data-change-monitor/main/assets/report.css"
+    )
+
+    # Render the template
+    report = template.render(
+        date=date,
+        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/op_logo.png",
+        stylesheet_url=stylesheet_url,
+        reports_index_url="index.html",
+        january_alert=jan_alert,
+        measure_base_url=measure_base_url,
+        triggered_tests=triggered_tests_for_template,
+        passed_tests=passed_tests_for_template,
+        testing_false=testing_false_for_template,
+        testing_none=testing_none_for_template,
+    )
+
+    # Write the rendered report
+    output_path = os.path.join(
+        reports_dir,
+        f"monthly_test_report_{date}.html"
+    )
+
+    with open(output_path, "w") as file:
         file.write(report)
 
-    print(f"Report written to {reports_dir}/monthly_testing_report_{date}.html")
-
-
+    print(f"Report written to {output_path}")
 
 def generate_list_reports_html():
     reports_dir = os.path.join(os.getcwd(), "reports", "epd", "tests")
-    
-    # Read the base64 image string from the file
-    image_path = os.path.join(os.getcwd(), "src", "base64_image.txt")
-    with open(image_path, "r") as file:
-        base64_image = file.read()
+    os.makedirs(reports_dir, exist_ok=True)
 
-    # Get all HTML files in the directory, except list_reports.html
-    html_files = [f for f in os.listdir(reports_dir) if f.endswith('.html') and f != 'list_reports.html' and f != 'list_test_reports.html' and f.startswith('monthly_test_report')]
+    # Get all monthly test report files
+    html_files = [
+        f
+        for f in os.listdir(reports_dir)
+        if (
+            f.endswith(".html")
+            and f != "list_reports.html"
+            and f != "list_test_reports.html"
+            and f.startswith("monthly_test_report")
+        )
+    ]
 
-    # Start the HTML content with the Base64 logo embedded in the header
-    html_content = f"""
-    <html>
-    <head>
-    <title>English Prescribing Data - Monthly Test Reports</title>
-    <style>
-        body {{
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 20px;
-        }}
-        a {{
-            text-decoration: none;
-            color: #0485d1;
-        }}
-        a:hover {{
-            text-decoration: underline;
-        }}
-        h2 {{
-            color: #333;
-        }}
-        li {{
-            margin: 10px 0;
-        }}
-        header {{
-            text-align: center;
-            margin-bottom: 40px;
-        }}
-        header img {{
-            max-width: 650px;
-            margin-bottom: 10px;
-        }}
-        .container {{
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }}
-    </style>
-    </head>
-    <body>
-    <div class="container">
-        <header>
-            <img src="{base64_image}" alt="OpenPrescribing logo">
-            <h2>English Prescribing Data - Monthly Test Reports</h2>
-        </header>
-        <ul>
-    """
-
-    # Function to extract the date portion (YYYY-MM) for sorting
+    # Extract date from filename for sorting
     def extract_date(filename):
-        # Split by underscores and get the last part, then remove '.html'
-        date_part = filename.split('_')[-1].replace('.html', '')
+        date_part = filename.split("_")[-1].replace(".html", "")
         return date_part
 
-    # Sort the list using the extracted date as the key so the index page appears in correct order
+    # Sort reports chronologically
     html_files = sorted(html_files, key=extract_date)
 
-    # Add links to all HTML files
+    # Build data for the template
+    reports = []
+
     for html_file in html_files:
-        title = os.path.splitext(html_file)[0]
-        # Create title for month and year
-        title = title.split('_')[-1]
-        title = pd.to_datetime(title).strftime('%B %Y')
-        link = f"{preview_base_url}https://github.com/ebmdatalab/openprescribing-epd-new/blob/main/reports/epd/tests/{html_file}"
-        html_content += f'<li><a href="{link}">{title}</a></li>\n'
+        date_part = os.path.splitext(html_file)[0].split("_")[-1]
+        title = pd.to_datetime(date_part).strftime("%B %Y")
 
-    # End the HTML content
-    html_content += """
-    </ul>
-    </div>
-    </body>
-    </html>
-    """
+        reports.append({
+            "title": title,
+            "url": html_file,
+        })
 
-    # Write the HTML content to list_reports.html
-    with open(os.path.join(reports_dir, 'list_test_reports.html'), 'w') as f:
-        f.write(html_content)
+    # Load the shared list template
+    template = template_env.get_template("report_list.html")
+
+    # Render the template
+    html_content = template.render(
+        title="English Prescribing Data - Monthly Test Reports",
+        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/op_logo.png",
+        logo_alt="OpenPrescribing logo",
+        stylesheet_url=(
+            "https://raw.githubusercontent.com/"
+            "ebmdatalab/openprescribing-data-change-monitor/main/assets/report.css"
+        ),
+        reports=reports,
+    )
+
+    # Write the index page
+    output_path = os.path.join(
+        reports_dir,
+        "list_test_reports.html"
+    )
+
+    with open(output_path, "w") as file:
+        file.write(html_content)
 
 def run_tests(bnf_codes_df, date_for):
     folder_path = os.path.join(os.getcwd(), "measures_to_test")

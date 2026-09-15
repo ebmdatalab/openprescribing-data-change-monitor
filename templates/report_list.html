@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ stylesheet_url }}">
+</head>
+
+<body>
+    <div class="container report-list">
+
+        <nav class="back-navigation">
+            <a href="../../index.html">
+                Back to OpenPrescribing Data Change Monitor
+            </a>
+        </nav>
+
+        <header class="report-list-header">
+            <img src="{{ logo_url }}" alt="{{ logo_alt }}">
+            <h1>{{ title }}</h1>
+        </header>
+
+        <div class="report-list-intro">
+            <p>
+                Select a monthly report below to view the changes identified
+                for that period.
+            </p>
+
+            <p class="report-count">
+                {{ reports | length }} reports available
+            </p>
+        </div>
+
+        <div class="latest-report">
+            <a class="button" href="latest.html">
+                View latest report
+            </a>
+        </div>
+
+        <h2 class="archive-heading">
+            Report archive
+        </h2>
+
+        <div class="report-links">
+            {% for report in reports %}
+                <a class="report-link" href="{{ report.url }}">
+                    <span>{{ report.title }}</span>
+                    <span class="report-link-arrow" aria-hidden="true">&rsaquo;</span>
+                </a>
+            {% endfor %}
+        </div>
+
+    </div>
+</body>
+</html>

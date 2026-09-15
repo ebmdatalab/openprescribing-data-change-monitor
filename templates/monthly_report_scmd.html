@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Monthly New Item Report (SCMD) for {{ date }}</title>
+    <link rel="stylesheet" href="{{ stylesheet_url }}">
+</head>
+
+<body>
+    <div class="container report-page">
+
+        <nav class="back-navigation">
+            <a href="{{ reports_index_url }}">
+                Back to report list
+            </a>
+            <span class="navigation-separator">|</span>
+            <a href="../../index.html">
+                OpenPrescribing Data Change Monitor homepage
+            </a>
+        </nav>
+
+        <header class="report-header">
+            <img src="{{ logo_url }}" alt="OpenPrescribing Hospitals logo">
+
+            <span class="section-kicker">Secondary care</span>
+
+            <h1>
+                Secondary Care Medicines Data
+            </h1>
+
+            <p class="report-date">
+                Monthly change report for {{ date }}
+            </p>
+        </header>
+
+        <div class="report-introduction">
+            <p>
+                This report details items appearing in the Secondary Care
+                Medicines Data for {{ date }} that have not previously
+                appeared in the data.
+            </p>
+        </div>
+
+
+        <section class="report-section">
+            <div class="report-section-header">
+                <span class="section-number">1</span>
+
+                <div>
+                    <h2>New VTMs</h2>
+                    <p>
+                        Virtual Therapeutic Moieties appearing in SCMD
+                        for the first time.
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                {{ vtms | safe }}
+            </div>
+        </section>
+
+
+        <section class="report-section">
+            <div class="report-section-header">
+                <span class="section-number">2</span>
+
+                <div>
+                    <h2>New VMPs</h2>
+                    <p>
+                        Virtual Medicinal Products appearing in SCMD
+                        for the first time.
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                {{ vmps | safe }}
+            </div>
+        </section>
+
+
+        <footer class="report-footer">
+            <a href="{{ reports_index_url }}">
+                Back to report list
+            </a>
+        </footer>
+
+    </div>
+</body>
+</html>

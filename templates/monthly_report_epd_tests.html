@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>OpenPrescribing Development Testing Review - {{ date }}</title>
+    <link rel="stylesheet" href="{{ stylesheet_url }}">
+</head>
+
+<body>
+    <div class="container report-page testing-report">
+
+        <nav class="back-navigation">
+            <a href="{{ reports_index_url }}">
+                Back to report list
+            </a>
+            <span class="navigation-separator">|</span>
+            <a href="../../index.html">
+                OpenPrescribing Data Change Monitor homepage
+            </a>
+        </nav>
+
+        <header class="report-header testing-report-header">
+            <img src="{{ logo_url }}" alt="OpenPrescribing development testing">
+
+            <span class="section-kicker">
+                Development and quality assurance
+            </span>
+
+            <h1>
+                OpenPrescribing Testing Review
+            </h1>
+
+            <p class="report-date">
+                Monthly review for {{ date }}
+            </p>
+        </header>
+
+        <div class="report-introduction">
+            <p>
+                This is a development-focused testing report for the
+                OpenPrescribing team.
+            </p>
+
+            <p>
+                Newly identified items in English Prescribing Data are
+                checked against OpenPrescribing measures to identify
+                measures that may require review.
+            </p>
+
+            <p>
+                These checks are intended to support development and
+                quality assurance rather than provide a public summary
+                of prescribing data.
+            </p>
+        </div>
+
+        {{ january_alert | safe }}
+
+
+        {% if triggered_tests | length == 0 %}
+
+            <section class="test-summary test-summary-passed">
+                <span class="test-summary-icon">&#10003;</span>
+
+                <div>
+                    <h2>All tests passed</h2>
+
+                    <p>
+                        No measures were triggered by the newly identified
+                        items in this month's data.
+                    </p>
+                </div>
+            </section>
+
+        {% else %}
+
+            <section class="test-section">
+
+                <div class="test-section-header">
+                    <div>
+                        <span class="section-kicker">
+                            Review required
+                        </span>
+
+                        <h2>Measures to check</h2>
+                    </div>
+
+                    <span class="test-count">
+                        {{ triggered_tests | length }}
+                    </span>
+                </div>
+
+                <p class="section-description">
+                    These measures have been triggered by newly identified
+                    items and should be reviewed by the OpenPrescribing
+                    development team.
+                </p>
+
+
+                {% for item in triggered_tests %}
+
+                    <div class="test-card test-card-triggered">
+
+                        <div class="test-card-header">
+                            <a
+                                href="{{ measure_base_url }}/{{ item.title }}"
+                                class="test-title"
+                            >
+                                {{ item.title }}
+                            </a>
+
+                            <span class="svg-icon test-question-icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="#f97306"
+                                    viewBox="0 0 16 16"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14"
+                                    />
+                                </svg>
+                            </span>
+                        </div>
+
+                        <p class="test-comments">
+                            {{ item.comments }}
+                        </p>
+
+                        <div class="table-wrapper">
+                            {{ item.table | safe }}
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </section>
+
+
+            <section class="test-section">
+
+                <div class="test-section-header">
+                    <div>
+                        <span class="section-kicker">
+                            No action identified
+                        </span>
+
+                        <h2>Tests passed</h2>
+                    </div>
+
+                    <span class="test-count test-count-passed">
+                        {{ passed_tests | length }}
+                    </span>
+                </div>
+
+                {% if passed_tests | length == 0 %}
+
+                    <p class="empty-test-message">
+                        No tests passed.
+                    </p>
+
+                {% else %}
+
+                    <div class="passed-tests">
+
+                        {% for item in passed_tests %}
+
+                            <a
+                                class="passed-test"
+                                href="{{ measure_base_url }}/{{ item.title }}"
+                            >
+                                <span>{{ item.title }}</span>
+
+                                <span class="svg-icon test-tick-icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="#15b01a"
+                                        viewBox="0 0 16 16"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"
+                                        />
+                                    </svg>
+                                </span>
+                            </a>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+
+            {% if testing_false or testing_none %}
+
+                <section class="test-section other-measures">
+
+                    <div class="test-section-header">
+                        <div>
+                            <span class="section-kicker">
+                                Configuration
+                            </span>
+
+                            <h2>Other measures</h2>
+                        </div>
+                    </div>
+
+                    {% if testing_false %}
+
+                        <h3>Measures with testing disabled</h3>
+
+                        {% for item in testing_false %}
+
+                            <p>
+                                <a href="{{ measure_base_url }}/{{ item.filename }}.json">
+                                    {{ item.filename }}
+                                </a>
+                            </p>
+
+                        {% endfor %}
+
+                    {% endif %}
+
+
+                    {% if testing_none %}
+
+                        <h3>Measures without testing information</h3>
+
+                        {% for item in testing_none %}
+
+                            <p>
+                                <a href="{{ measure_base_url }}/{{ item.filename }}.json">
+                                    {{ item.filename }}
+                                </a>
+                            </p>
+
+                        {% endfor %}
+
+                    {% endif %}
+
+                </section>
+
+            {% endif %}
+
+        {% endif %}
+
+
+        <footer class="report-footer">
+            <a href="{{ reports_index_url }}">
+                Back to report list
+            </a>
+        </footer>
+
+    </div>
+</body>
+</html>

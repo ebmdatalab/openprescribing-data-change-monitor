@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Monthly New Item Report for {{ date }}</title>
+    <link rel="stylesheet" href="{{ stylesheet_url }}">
+</head>
+
+<body>
+    <div class="container report-page">
+
+        <nav class="back-navigation">
+            <a href="{{ reports_index_url }}">
+                Back to report list
+            </a>
+            <span class="navigation-separator">|</span>
+            <a href="../../index.html">
+                OpenPrescribing Data Change Monitor homepage
+            </a>
+        </nav>
+
+        <header class="report-header">
+            <img src="{{ logo_url }}" alt="OpenPrescribing logo">
+
+            <span class="section-kicker">Primary care</span>
+
+            <h1>
+                English Prescribing Data
+            </h1>
+
+            <p class="report-date">
+                Monthly change report for {{ date }}
+            </p>
+        </header>
+
+        <div class="report-introduction">
+            <p>
+                This report details items appearing in the English Prescribing Data
+                for {{ date }} that have not previously appeared in the data
+                (from Jan 2014).
+            </p>
+        </div>
+
+        {{ january_alert | safe }}
+
+
+        <section class="report-section">
+            <div class="report-section-header">
+                <span class="section-number">1</span>
+
+                <div>
+                    <h2>New Chemical Substances</h2>
+                    <p>
+                        Identify "chemical substances" prescribed for the first time.
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                {{ chemical_substances | safe }}
+            </div>
+        </section>
+
+
+        <section class="report-section">
+            <div class="report-section-header">
+                <span class="section-number">2</span>
+
+                <div>
+                    <h2>New BNF Codes</h2>
+                    <p>
+                        Identify BNF codes used for the first time.
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                {{ bnf_codes | safe }}
+            </div>
+        </section>
+
+
+        <section class="report-section">
+            <div class="report-section-header">
+                <span class="section-number">3</span>
+
+                <div>
+                    <h2>New BNF Descriptions</h2>
+                    <p>
+                        Identify new descriptions only (not new BNF code).
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                {{ bnf_descriptions | safe }}
+            </div>
+        </section>
+
+
+        <footer class="report-footer">
+            <a href="{{ reports_index_url }}">
+                Back to report list
+            </a>
+        </footer>
+
+    </div>
+</body>
+</html>
