@@ -7,26 +7,57 @@
 </head>
 
 <body>
-    <div class="container">
-        <header>
+    <div class="container report-page">
+
+        <nav class="back-navigation">
+            <a href="index.html">
+                Back to report list
+            </a>
+            <span class="navigation-separator">|</span>
+            <a href="../../index.html">
+                OpenPrescribing Data Change Monitor homepage
+            </a>
+        </nav>
+
+        <header class="report-header">
             <img src="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/op_logo.png" alt="OpenPrescribing logo">
-            <h2>Monthly English Prescribing Data New Item Report for 2026-06</h2>
+
+            <span class="section-kicker">Primary care</span>
+
+            <h1>
+                English Prescribing Data
+            </h1>
+
+            <p class="report-date">
+                Monthly change report for 2026-06
+            </p>
         </header>
 
-        <p>
-            This report details items appearing in the English Prescribing Data
-            for 2026-06 that have not previously appeared in the data (from Jan 2014).
-        </p>
+        <div class="report-introduction">
+            <p>
+                This report details items appearing in the English Prescribing Data
+                for 2026-06 that have not previously appeared in the data
+                (from Jan 2014).
+            </p>
+        </div>
 
         
 
-        <p>
-            <a href="index.html">View previous reports</a>
-        </p>
 
-        <h3>New Chemical Substances</h3>
-        <p>Identify "chemical substances" prescribed for the first time</p>
-        <table border="1" class="dataframe table">
+        <section class="report-section">
+            <div class="report-section-header">
+                <span class="section-number">1</span>
+
+                <div>
+                    <h2>New Chemical Substances</h2>
+                    <p>
+                        Identify "chemical substances" prescribed for the first time.
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table border="1" class="dataframe table">
   <thead>
     <tr style="text-align: right;">
       <th>BNF_CODE</th>
@@ -37,10 +68,24 @@
   <tbody>
   </tbody>
 </table>
+            </div>
+        </section>
 
-        <h3>New BNF Codes</h3>
-        <p>Identify BNF codes used for the first time</p>
-        <table border="1" class="dataframe table">
+
+        <section class="report-section">
+            <div class="report-section-header">
+                <span class="section-number">2</span>
+
+                <div>
+                    <h2>New BNF Codes</h2>
+                    <p>
+                        Identify BNF codes used for the first time.
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table border="1" class="dataframe table">
   <thead>
     <tr style="text-align: right;">
       <th>BNF_CODE</th>
@@ -421,10 +466,24 @@
     </tr>
   </tbody>
 </table>
+            </div>
+        </section>
 
-        <h3>New BNF Descriptions</h3>
-        <p>Identify new descriptions only (not new BNF code)</p>
-        <table border="1" class="dataframe table">
+
+        <section class="report-section">
+            <div class="report-section-header">
+                <span class="section-number">3</span>
+
+                <div>
+                    <h2>New BNF Descriptions</h2>
+                    <p>
+                        Identify new descriptions only (not new BNF code).
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table border="1" class="dataframe table">
   <thead>
     <tr style="text-align: right;">
       <th>BNF_CODE</th>
@@ -475,6 +534,16 @@
     </tr>
   </tbody>
 </table>
+            </div>
+        </section>
+
+
+        <footer class="report-footer">
+            <a href="index.html">
+                Back to report list
+            </a>
+        </footer>
+
     </div>
 </body>
 </html>

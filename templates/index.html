@@ -7,102 +7,184 @@
 </head>
 
 <body>
-    <div class="container report-list">
+    <div class="container homepage">
+
         <header>
             <img src="{{ logo_url }}" alt="OpenPrescribing logo">
             <h1>OpenPrescribing Data Change Monitor</h1>
         </header>
 
-        <p>
-            The <strong>OpenPrescribing Data Change Monitor</strong> identifies
-            new or changed items in newly published prescribing data and
-            highlights changes that may affect OpenPrescribing.
+        <p class="intro">
+            The OpenPrescribing Data Change Monitor identifies new or changed
+            items in newly published prescribing data and highlights changes
+            that may affect OpenPrescribing.
         </p>
 
-        <h2>Primary care</h2>
 
-        <h3>English Prescribing Data (EPD)</h3>
+        <nav class="contents">
+            <strong class="contents-title">Contents</strong>
 
-        <p>
-            The monthly change reports identify:
-        </p>
+            <div class="contents-group">
+                <a class="contents-section" href="#reports">
+                    Data change reports
+                </a>
 
-        <ul>
-            <li>
-                <strong>New or changed chemical substance descriptions</strong>
-                <br>
-                For example, a new drug being prescribed in primary care
-                for the first time, or an existing chemical substance
-                description changing.
-            </li>
+                <div class="contents-items">
+                    <a href="#primary-care">
+                        Primary care
+                    </a>
 
-            <li>
-                <strong>New or changed BNF codes</strong>
-                <br>
-                For example, a new drug or new formulation or strength
-                of an existing drug being prescribed in primary care
-                for the first time, or an existing BNF code changing.
-            </li>
+                    <a href="#secondary-care">
+                        Secondary care
+                    </a>
+                </div>
+            </div>
 
-            <li>
-                <strong>New or changed BNF descriptions</strong>
-                <br>
-                For example, updated or modified descriptions of
-                existing items.
-            </li>
-        </ul>
+            <div class="contents-group">
+                <a class="contents-section" href="#internal-monitoring">
+                    Internal monitoring
+                </a>
 
-        <p>
-            <a href="epd/changes/">
+                <div class="contents-items">
+                    <a href="#tests">
+                        Testing reviews
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+
+        <section id="reports" class="reports-introduction">
+            <h2>Data change reports</h2>
+
+            <p>
+                Monthly reports highlighting new and changed items in
+                prescribing data across primary and secondary care.
+            </p>
+        </section>
+
+
+        <section id="primary-care" class="dataset-section">
+
+            <div class="section-heading">
+                <span class="section-kicker">
+                    Primary care
+                </span>
+
+                <h2>OpenPrescribing</h2>
+
+                <p class="dataset-name">
+                    English Prescribing Data (EPD)
+                </p>
+            </div>
+
+            <p>
+                The English Prescribing Data change reports identify:
+            </p>
+
+            <ul>
+                <li>
+                    New or changed chemical substance descriptions
+                </li>
+                <li>
+                    New or changed BNF codes
+                </li>
+                <li>
+                    New or changed BNF descriptions
+                </li>
+            </ul>
+
+            <a class="button" href="epd/changes/">
                 View EPD change reports
             </a>
-        </p>
 
-        <h2>Secondary care</h2>
+        </section>
 
-        <h3>Secondary Care Medicines Data (SCMD)</h3>
 
-        <p>
-            The monthly change reports identify:
-        </p>
+        <section id="secondary-care" class="dataset-section">
 
-        <ul>
-            <li>
-                <strong>New Virtual Therapeutic Moieties (VTMs)</strong>
-                <br>
-                For example, a new therapeutic moiety appearing in
-                secondary care medicines data for the first time.
-            </li>
+            <div class="section-heading">
+                <span class="section-kicker">
+                    Secondary care
+                </span>
 
-            <li>
-                <strong>New Virtual Medicinal Products (VMPs)</strong>
-                <br>
-                For example, a new medicinal product or formulation
-                appearing in secondary care medicines data for the
-                first time.
-            </li>
-        </ul>
+                <h2>OpenPrescribing Hospitals</h2>
 
-        <p>
-            <a href="scmd/changes/">
+                <p class="dataset-name">
+                    Secondary Care Medicines Data (SCMD)
+                </p>
+            </div>
+
+            <p>
+                The Secondary Care Medicines Data change reports identify:
+            </p>
+
+            <ul>
+                <li>
+                    New Virtual Therapeutic Moieties (VTMs)
+                </li>
+                <li>
+                    New Virtual Medicinal Products (VMPs)
+                </li>
+            </ul>
+
+            <a class="button" href="scmd/changes/">
                 View SCMD change reports
             </a>
-        </p>
 
-        <h2>OpenPrescribing measure tests</h2>
+        </section>
 
-        <p>
-            New items in English Prescribing Data are checked against
-            OpenPrescribing measures to identify changes that may require
-            review. These tests help to ensure the accuracy and relevance
-            of OpenPrescribing's prescribing tools.
-        </p>
 
-        <p>
-            <a href="epd/tests/">
-                View measure test reports
+        <section
+            id="internal-monitoring"
+            class="reports-introduction internal-monitoring-introduction"
+        >
+            <h2>Internal monitoring</h2>
+
+            <p>
+                Development-focused reports and checks used by the
+                OpenPrescribing team to identify changes that may require
+                review.
+            </p>
+
+            <p class="internal-notice">
+                <strong>Internal use:</strong>
+                These reports are designed for the OpenPrescribing team to
+                support development, quality assurance and review. They are
+                not intended as public-facing prescribing reports.
+            </p>
+        </section>
+
+
+        <section
+            id="tests"
+            class="dataset-section internal-monitoring-card"
+        >
+
+            <div class="section-heading">
+                <span class="section-kicker">
+                    Development and quality assurance
+                </span>
+
+                <h2>OpenPrescribing Testing Reviews</h2>
+
+                <p class="dataset-name">
+                    English Prescribing Data (EPD)
+                </p>
+            </div>
+
+            <p>
+                Newly identified items in English Prescribing Data are
+                checked against OpenPrescribing measures to identify
+                measures that may require review.
+            </p>
+
+            <a class="button secondary-button" href="epd/tests/">
+                View testing review reports
             </a>
-        </p>
+
+        </section>
+
     </div>
 </body>
 </html>

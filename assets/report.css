@@ -123,3 +123,531 @@ h1 {
 .report-list a {
     font-weight: normal;
 }
+
+/* Homepage */
+
+.homepage {
+    max-width: 1100px;
+}
+
+.homepage header {
+    margin-bottom: 30px;
+}
+
+.homepage header img {
+    max-width: 520px;
+}
+
+.homepage h1 {
+    color: #333;
+    margin: 20px 0 0 0;
+}
+
+.homepage .intro {
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Contents */
+
+.homepage .contents {
+    padding: 20px 24px;
+    margin-bottom: 35px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+}
+
+.contents-title {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 1.05rem;
+}
+
+.contents-group {
+    margin-bottom: 18px;
+}
+
+.contents-group:last-child {
+    margin-bottom: 0;
+}
+
+.contents-section {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.contents-items {
+    margin-left: 22px;
+    padding-left: 14px;
+    border-left: 2px solid #ccc;
+}
+
+.contents-items a {
+    display: block;
+    margin: 5px 0;
+    font-weight: 500;
+}
+
+.homepage .dataset-section {
+    margin-top: 30px;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.homepage .section-heading {
+    margin-bottom: 20px;
+}
+
+.homepage .section-kicker {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.homepage .dataset-section h2 {
+    margin: 0;
+}
+
+.homepage .dataset-name {
+    margin: 8px 0 0 0;
+    color: #555;
+    font-size: 1.05rem;
+}
+
+.homepage .dataset-section ul {
+    margin-bottom: 25px;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #0485d1;
+    color: white;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.button:hover {
+    text-decoration: none;
+    background-color: #0374b8;
+}
+
+.secondary-button {
+    background-color: #555;
+}
+
+.secondary-button:hover {
+    background-color: #444;
+}
+
+.homepage .internal-section {
+    margin-top: 45px;
+    padding: 25px 30px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+}
+
+.homepage .internal-section h2 {
+    margin-top: 5px;
+}
+
+/* Internal monitoring */
+
+.internal-monitoring-introduction {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 2px solid #ddd;
+}
+
+.internal-notice {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-left: 4px solid #c62828;
+    background-color: #fff4f4;
+    color: #8b1a1a;
+    border-radius: 4px;
+}
+
+.internal-monitoring-card {
+    background-color: #f2f2f2 !important;
+}
+
+.internal-monitoring-card .section-kicker {
+    color: #666;
+}
+
+/* Report list pages */
+
+.report-list {
+    max-width: 900px;
+}
+
+.back-navigation {
+    margin-bottom: 20px;
+}
+
+.back-navigation a {
+    font-weight: 600;
+}
+
+.report-list-header {
+    margin-bottom: 30px;
+}
+
+.report-list-header img {
+    max-width: 520px;
+}
+
+.report-list-header h1 {
+    margin: 10px 0 0 0;
+    color: #333;
+}
+
+.report-list-intro {
+    margin-bottom: 25px;
+}
+
+.report-list-intro p {
+    margin-bottom: 5px;
+}
+
+.report-count {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.report-links {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.report-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.report-link:last-child {
+    border-bottom: none;
+}
+
+.report-link:hover {
+    background-color: #f2f2f2;
+    text-decoration: none;
+}
+
+.report-link-arrow {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+/* Latest report */
+
+.latest-report {
+    margin: 25px 0 35px 0;
+}
+
+.archive-heading {
+    margin-bottom: 15px;
+}
+
+.report-links {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Individual report pages */
+
+.report-page {
+    max-width: 1100px;
+}
+
+.report-page .back-navigation {
+    margin-bottom: 25px;
+}
+
+.navigation-separator {
+    margin: 0 8px;
+    color: #999;
+}
+
+.report-header {
+    margin-bottom: 30px;
+}
+
+.report-header img {
+    max-width: 520px;
+    margin-bottom: 20px;
+}
+
+.report-header .section-kicker {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.report-header h1 {
+    margin: 0;
+    color: #333;
+}
+
+.report-date {
+    margin-top: 8px;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.report-introduction {
+    margin-bottom: 30px;
+    padding: 20px 25px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+}
+
+.report-introduction p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.report-section {
+    margin-top: 35px;
+    padding: 25px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.report-section-header {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.section-number {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #0485d1;
+    color: white;
+    font-weight: 700;
+}
+
+.report-section-header h2 {
+    margin: 0;
+}
+
+.report-section-header p {
+    margin-top: 5px;
+    color: #666;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.report-section table {
+    margin-top: 0;
+}
+
+.report-footer {
+    margin-top: 35px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Testing reports */
+
+.testing-report {
+    max-width: 1100px;
+}
+
+.test-summary {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 30px;
+    padding: 25px 30px;
+    border-radius: 10px;
+}
+
+.test-summary-passed {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+}
+
+.test-summary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background-color: #15b01a;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.test-summary h2 {
+    margin: 0;
+}
+
+.test-summary p {
+    margin: 6px 0 0 0;
+    color: #666;
+}
+
+.test-section {
+    margin-top: 35px;
+    padding: 25px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.test-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.test-section-header h2 {
+    margin: 0;
+}
+
+.section-description {
+    color: #666;
+}
+
+.test-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 10px;
+    border-radius: 16px;
+    background-color: #f97306;
+    color: white;
+    font-weight: 700;
+}
+
+.test-count-passed {
+    background-color: #15b01a;
+}
+
+.test-card {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.test-card-triggered {
+    background-color: #f8f9fa;
+    border-left: 4px solid #f97306;
+}
+
+.test-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.test-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.test-comments {
+    margin-top: 10px;
+    color: #555;
+}
+
+.test-question-icon,
+.test-tick-icon {
+    width: 1.7em;
+    height: 1.7em;
+    flex: 0 0 auto;
+}
+
+.test-question-icon svg,
+.test-tick-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.passed-tests {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.passed-test {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.passed-test:last-child {
+    border-bottom: none;
+}
+
+.passed-test:hover {
+    background-color: #f2f2f2;
+    text-decoration: none;
+}
+
+.empty-test-message {
+    color: #666;
+}
+
+.other-measures {
+    background-color: #f2f2f2;
+}
+
+.other-measures h3 {
+    margin-top: 20px;
+}
+
+.other-measures p {
+    margin-bottom: 8px;
+}

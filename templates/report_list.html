@@ -8,24 +8,48 @@
 
 <body>
     <div class="container report-list">
-        <header>
+
+        <nav class="back-navigation">
+            <a href="../../index.html">
+                Back to OpenPrescribing Data Change Monitor
+            </a>
+        </nav>
+
+        <header class="report-list-header">
             <img src="{{ logo_url }}" alt="{{ logo_alt }}">
-            <h2>{{ title }}</h2>
+            <h1>{{ title }}</h1>
         </header>
 
-        <p>
-            <a href="../../index.html">
-                Back to OpenPrescribing Data Change Monitor homepage
-            </a>
-        </p>
+        <div class="report-list-intro">
+            <p>
+                Select a monthly report below to view the changes identified
+                for that period.
+            </p>
 
-        <ul>
+            <p class="report-count">
+                {{ reports | length }} reports available
+            </p>
+        </div>
+
+        <div class="latest-report">
+            <a class="button" href="latest.html">
+                View latest report
+            </a>
+        </div>
+
+        <h2 class="archive-heading">
+            Report archive
+        </h2>
+
+        <div class="report-links">
             {% for report in reports %}
-                <li>
-                    <a href="{{ report.url }}">{{ report.title }}</a>
-                </li>
+                <a class="report-link" href="{{ report.url }}">
+                    <span>{{ report.title }}</span>
+                    <span class="report-link-arrow" aria-hidden="true">&rsaquo;</span>
+                </a>
             {% endfor %}
-        </ul>
+        </div>
+
     </div>
 </body>
 </html>

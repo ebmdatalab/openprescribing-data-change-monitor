@@ -44,7 +44,7 @@ def copy_directory_contents(source_dir, destination_dir):
 
 def copy_html_file(source_path, destination_path):
     """
-    Copy an HTML file while replacing temporary external URLs
+    Copy an HTML file while replacing temporary external asset URLs
     with paths appropriate for the static site.
     """
     with open(source_path, "r", encoding="utf-8") as file:
@@ -52,7 +52,6 @@ def copy_html_file(source_path, destination_path):
 
     destination_dir = os.path.dirname(destination_path)
 
-    # Work out the relative path from this HTML file to site/assets/
     relative_assets = os.path.relpath(
         os.path.join(SITE_DIR, "assets"),
         destination_dir,
@@ -66,12 +65,13 @@ def copy_html_file(source_path, destination_path):
         f"{asset_prefix}report.css",
     )
 
-    # Logos
+    # EPD logo
     html = html.replace(
         f"{RAW_GITHUB_BASE}op_logo.png",
         f"{asset_prefix}op_logo.png",
     )
 
+    # OpenPrescribing Hospitals logo
     html = html.replace(
         f"{RAW_GITHUB_BASE}oph_logo.png",
         f"{asset_prefix}oph_logo.png",
@@ -84,7 +84,7 @@ def copy_html_file(source_path, destination_path):
 
 
 def copy_reports():
-    """Copy reports into site/, rewriting HTML asset and navigation URLs."""
+    """Copy reports into site/, rewriting HTML asset URLs."""
     for root, dirs, files in os.walk(REPORTS_DIR):
         relative_root = os.path.relpath(root, REPORTS_DIR)
 
@@ -150,7 +150,10 @@ def build_report_list_page(
         if (
             filename.endswith(".html")
             and not filename.startswith("list_")
-            and filename != "index.html"
+            and filename not in {
+                "index.html",
+                "latest.html",
+            }
         )
     ]
 
@@ -185,7 +188,7 @@ def build_report_list_page(
 
     output_directory = os.path.dirname(output_path)
 
-    # Calculate relative path from the list page to site/assets/.
+    # Calculate the relative path from the list page to site/assets/.
     relative_assets = os.path.relpath(
         os.path.join(SITE_DIR, "assets"),
         output_directory,
@@ -228,7 +231,7 @@ def build_report_list_pages():
         logo_alt="OpenPrescribing logo",
     )
 
-    # EPD test reports
+    # EPD testing reports
     build_report_list_page(
         source_directory=os.path.join(
             SITE_DIR,
@@ -241,9 +244,9 @@ def build_report_list_pages():
             "tests",
             "index.html",
         ),
-        title="English Prescribing Data - Monthly Test Reports",
+        title="OpenPrescribing - Monthly Testing Review Reports",
         logo_filename="op_logo.png",
-        logo_alt="OpenPrescribing logo",
+        logo_alt="OpenPrescribing development testing",
     )
 
     # SCMD change reports
@@ -265,6 +268,86 @@ def build_report_list_pages():
     )
 
 
+def build_latest_report(report_directory, filename_prefix):
+    """
+    Create latest.html as a copy of the newest dated report.
+    """
+
+    report_files = [
+        filename
+        for filename in os.listdir(report_directory)
+        if (
+            filename.startswith(filename_prefix)
+            and filename.endswith(".html")
+            and filename != "latest.html"
+        )
+    ]
+
+    if not report_files:
+        return
+
+    def extract_date(filename):
+        return filename.rsplit("_", 1)[-1].replace(".html", "")
+
+    latest_report = max(
+        report_files,
+        key=extract_date,
+    )
+
+    source_path = os.path.join(
+        report_directory,
+        latest_report,
+    )
+
+    destination_path = os.path.join(
+        report_directory,
+        "latest.html",
+    )
+
+    shutil.copy2(
+        source_path,
+        destination_path,
+    )
+
+    print(
+        f"Latest report: {latest_report} -> latest.html"
+    )
+
+
+def build_latest_reports():
+    """Create latest.html permalinks for each report type."""
+
+    # EPD change reports
+    build_latest_report(
+        report_directory=os.path.join(
+            SITE_DIR,
+            "epd",
+            "changes",
+        ),
+        filename_prefix="monthly_report_",
+    )
+
+    # SCMD change reports
+    build_latest_report(
+        report_directory=os.path.join(
+            SITE_DIR,
+            "scmd",
+            "changes",
+        ),
+        filename_prefix="monthly_report_scmd_",
+    )
+
+    # EPD testing reports
+    build_latest_report(
+        report_directory=os.path.join(
+            SITE_DIR,
+            "epd",
+            "tests",
+        ),
+        filename_prefix="monthly_test_report_",
+    )
+
+
 def build_site():
     """Build the complete static website."""
 
@@ -280,12 +363,17 @@ def build_site():
         os.path.join(SITE_DIR, "assets"),
     )
 
-    # Copy reports and rewrite their asset/navigation URLs.
+    # Copy reports and rewrite their asset URLs.
     copy_reports()
 
-    # Generate website pages.
+    # Build the homepage.
     build_index_page()
+
+    # Build report list pages.
     build_report_list_pages()
+
+    # Build latest.html permalinks.
+    build_latest_reports()
 
     print(f"Site built in {SITE_DIR}")
 
