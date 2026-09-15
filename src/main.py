@@ -91,7 +91,7 @@ def compare_data(selected_dataset, existing_data_extract, latest_data_extract, d
             testing_utils.run_tests(bnf_codes, data_for)
             return True
         except Exception as e:
-            print(f"Error comparing data: {e}")
+            print(f"Error comparing EPD data: {e}")
             return False
     elif selected_dataset == 'scmd':
         logging.info("Comparing data for SCMD dataset.")
@@ -108,7 +108,7 @@ def compare_data(selected_dataset, existing_data_extract, latest_data_extract, d
             #testing_utils.run_tests(new_vmps, data_for)
             return True
         except Exception as e:
-            print(f"Error comparing data: {e}")
+            print(f"Error comparing SCMD data: {e}")
             return False
     
 def convert_to_yyyymm(date):
