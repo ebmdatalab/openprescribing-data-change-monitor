@@ -52,16 +52,46 @@ def read_csv_html(path):
 
 
 def get_january_alert(date):
-    """Return the January BNF structure-change warning when relevant."""
-    if date[-2:] == "01":
-        return (
-            '<p><b>Please note:</b> January data often includes a larger number '
-            'of "changes" as BNF structure changes are generally made in January '
-            f'data - <a href="https://www.nhsbsa.nhs.uk/bnf-code-changes-january-{date[:4]}">'
-            'more information here</a></p>'
-        )
+    """Return the appropriate January BNF change warning."""
+    if date[-2:] != "01":
+        return ""
 
-    return ""
+    year = int(date[:4])
+
+    bnf_change_styles = {
+        2024: {
+            "url": "https://www.nhsbsa.nhs.uk/bnf-code-changes-january-{year}",
+            "description": "BNF code changes",
+        },
+        2025: {
+            "url": "https://www.nhsbsa.nhs.uk/bnf-version-changes-january-{year}",
+            "description": "BNF version changes",
+        },
+    }
+
+    # Find the most recent rule that applies to this year.
+    applicable_years = [
+        rule_year
+        for rule_year in bnf_change_styles
+        if rule_year <= year
+    ]
+
+    if not applicable_years:
+        return ""
+
+    rule_year = max(applicable_years)
+    rule = bnf_change_styles[rule_year]
+
+    changes_url = rule["url"].format(year=year)
+    changes_description = rule["description"]
+
+    return (
+        "<p><b>Please note:</b> January data often includes a larger number "
+        'of "changes" due to annual BNF changes. '
+        f'<a href="{changes_url}">'
+        f"More information about {changes_description} for January {year}"
+        "</a>.</p>"
+    )
 
 
 def render_epd_report(date):
