@@ -204,6 +204,30 @@ def write_monthly_report_html(chem_subs, bnf_codes, bnf_descriptions, date):
     reports_dir = os.path.join(os.getcwd(), "reports", "epd", "changes")
     os.makedirs(reports_dir, exist_ok=True)
 
+    data_dir = os.path.join(
+        os.getcwd(),
+        "data",
+        "epd",
+        "changes",
+        date,
+    )
+    os.makedirs(data_dir, exist_ok=True)
+
+    chem_subs.to_csv(
+        os.path.join(data_dir, "chemical_substances.csv"),
+        index=False,
+    )
+
+    bnf_codes.to_csv(
+        os.path.join(data_dir, "bnf_codes.csv"),
+        index=False,
+    )
+
+    bnf_descriptions.to_csv(
+        os.path.join(data_dir, "bnf_descriptions.csv"),
+        index=False,
+    )
+
     # Create an alert if January data to explain BNF structure changes
     if date[-2:] == '01':
         jan_alert = (
@@ -316,6 +340,26 @@ def generate_list_reports_html():
 def write_monthly_report_html_scmd(vtms, vmps, date):
     reports_dir = os.path.join(os.getcwd(), "reports", "scmd", "changes")
     os.makedirs(reports_dir, exist_ok=True)
+
+    data_dir = os.path.join(
+        os.getcwd(),
+        "data",
+        "scmd",
+        "changes",
+        date,
+    )
+
+    os.makedirs(data_dir, exist_ok=True)
+
+    vtms.to_csv(
+        os.path.join(data_dir, "vtms.csv"),
+        index=False,
+    )
+
+    vmps.to_csv(
+        os.path.join(data_dir, "vmps.csv"),
+        index=False,
+    )
 
     # Load the SCMD report template
     template = template_env.get_template("monthly_report_scmd.html")
