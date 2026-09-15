@@ -1,0 +1,55 @@
+BNF_CODE,BNF_DESCRIPTION,CHEMICAL_SUBSTANCE_BNF_DESCR
+0302000AAAAACAC,Generic Trimbow NEXThaler 88microg/5microg/9microg/dose inh,BeclometDiprop/Formoterol/Glycopyrronium (Corticosteroids)
+0302000ABAAAAAA,Beclometasone 100microg/Formoterol 6microg/dose dry pdr inh,BeclometDiprop/Formoterol
+0302000ABAAABAB,Beclometasone 100microg/Formoterol 6microg/dose inh CFC free,BeclometDiprop/Formoterol
+0302000ABAAACAC,Beclometasone 200microg/Formoterol 6microg/dose dry pdr inh,BeclometDiprop/Formoterol
+0302000ABAAADAD,Beclometasone 200microg/Formoterol 6microg/dose inh CFC free,BeclometDiprop/Formoterol
+0302000ABBBAAAA,Fostair NEXThaler 100microg/dose / 6microg/dose dry pdr inh,BeclometDiprop/Formoterol
+0302000ABBBABAC,Fostair NEXThaler 200microg/dose / 6microg/dose dry pdr inh,BeclometDiprop/Formoterol
+0302000ABBCAAAB,Fostair 100micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBCABAD,Fostair 200micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBDAAAB,Bibecfo 100micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBDABAD,Bibecfo 200micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBEAAAB,Proxor 100micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBEABAD,Proxor 200micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBFAAAB,Luforbec 100micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBFABAD,Luforbec 200micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBGAAAB,Vivaire 100micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0302000ABBGABAD,Vivaire 200micrograms/dose / 6micrograms/dose inhaler,BeclometDiprop/Formoterol
+0402020ABAAAKAK,Paliperidone 700mg/3.5ml prolonged-rel inj pf syringes,Paliperidone
+0503010BABBABAB,Genvoya 150mg/150mg/200mg/10mg tablets,Elvitegravir/Cobicistat/Emtricitabine/Tenofovir alafenamide
+0503010BBBBAAAA,Eviplera 200mg/25mg/245mg tablets,Emtricitabine/Rilpivirine/Tenofovir disoproxil
+0503010BCBBAAAA,Odefsey 200mg/25mg/25mg tablets,Emtricitabine/Rilpivirine/Tenofovir alafenamide
+0602010M0BIABBC,Enolio 10micrograms/ml oral solution,Liothyronine sodium
+0906031C0BNAECC,Valupak Vitamin C 1000mg effervescent tablets,Ascorbic acid
+0906040G0BWBNFP,SunVit-D3 400unit/1500mg effervescent tablets,Colecalciferol
+0913261R0BFAAAE,Meta Healthcare low protein pizza crackers,Specialist food replacer savoury biscuits (0913261)
+0913261R0BFABAF,Meta Healthcare low protein salty sticks,Specialist food replacer savoury biscuits (0913261)
+0913261U0BCAAAB,Meta Healthcare low protein hazelnut spread,Specialist food replacer spreads (0913261)
+0913271B0BCAFAH,Glutafin gluten free fresh white rolls,Specialist food replacer rolls/baguettes (0913271)
+0913311D0BDAAAC,Resource Energy liquid apricot,Ready to serve 1.5 kcal/ml milkshake (0913311)
+0913311D0BDACAC,Resource Energy liquid chocolate,Ready to serve 1.5 kcal/ml milkshake (0913311)
+0913311D0BDADAC,Resource Energy liquid coffee,Ready to serve 1.5 kcal/ml milkshake (0913311)
+0913311D0BDAEAC,Resource Energy liquid strawberry & raspberry,Ready to serve 1.5 kcal/ml milkshake (0913311)
+0913311K0BBABAB,Aymes 2.0kcal liquid (3 flavours),"RtS 2-2.4 kcal/ml m/sk higher protein,higher energy(0913311)"
+0913311L0BBAAAA,Fresubin Powder Extra oral powder 62g sachets chocolate,Powder 1.6 kcal/ml milkshake (0913311)
+0913311L0BBADAA,Fresubin Powder Extra oral powder 62g sachets vanilla,Powder 1.6 kcal/ml milkshake (0913311)
+0913353A0BCAAAB,SMA Soya powder,Powder discontinued soya based formula (0913353)
+0913461C0BBADBD,Barkat gluten free all purpose flour mix,Specialist food replacer OTC/disc flour type mixes (0913461)
+0913461E0BBACAN,Barkat gluten free wholemeal bread sliced,Specialist food replacer OTC or disc bread (0913461)
+0913461E0BHABAQ,Just: Gluten Free white sandwich bread,Specialist food replacer OTC or disc bread (0913461)
+0913461H0BBADAX,Barkat gluten free par baked baguettes,Specialist food replacer OTC/disc rolls/baguettes (0913461)
+0914061C0BBAAAA,Nutrison Concentrated liquid,Tube feed non ACBS 2kcal/ml higher protein(0914061)
+130201000BBMKA0,CeraDerm lotion,Other emollient preparations
+22806208000,U-drain consumable pack tapered connector,Tubing And Accessories
+23850108514,CeraPlus ostomy barrier ring 48mm x 4.45mm,Skin Protectors
+23850108515,CeraPlus ostomy barrier ring slim 48mm x 2.3mm,Skin Protectors
+23850108516,CeraPlus ostomy convex barrier ring 20mm,Skin Protectors
+23850108517,CeraPlus ostomy convex barrier ring 30mm,Skin Protectors
+23850108518,CeraPlus ostomy convex barrier ring 40mm,Skin Protectors
+23850108519,CeraPlus ostomy oval convex barrier ring 22mm x 38mm,Skin Protectors
+23850108520,CeraPlus ostomy oval convex barrier ring 30mm x 48mm,Skin Protectors
+23850108521,CeraPlus ostomy oval convex barrier ring 38mm x 56mm,Skin Protectors
+23854808503,Esenta stomahesive seal 48mm x 4mm,Skin Protectors
+23854808504,Esenta stomahesive seal slim 48mm x 3mm,Skin Protectors
+23858588554,CeraPlus ostomy barrier ring slim 57mm x 2.3mm,Skin Protectors
