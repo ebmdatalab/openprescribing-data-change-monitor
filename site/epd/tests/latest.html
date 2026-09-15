@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>OpenPrescribing Development Testing Review - 2026-06</title>
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/report.css">
+</head>
+
+<body>
+    <div class="container report-page testing-report">
+
+        <nav class="back-navigation">
+            <a href="index.html">
+                Back to report list
+            </a>
+            <span class="navigation-separator">|</span>
+            <a href="../../index.html">
+                OpenPrescribing Data Change Monitor homepage
+            </a>
+        </nav>
+
+        <header class="report-header testing-report-header">
+            <img src="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/op_logo.png" alt="OpenPrescribing development testing">
+
+            <span class="section-kicker">
+                Development and quality assurance
+            </span>
+
+            <h1>
+                OpenPrescribing Testing Review
+            </h1>
+
+            <p class="report-date">
+                Monthly review for 2026-06
+            </p>
+        </header>
+
+        <div class="report-introduction">
+            <p>
+                This is a development-focused testing report for the
+                OpenPrescribing team.
+            </p>
+
+            <p>
+                Newly identified items in English Prescribing Data are
+                checked against OpenPrescribing measures to identify
+                measures that may require review.
+            </p>
+
+            <p>
+                These checks are intended to support development and
+                quality assurance rather than provide a public summary
+                of prescribing data.
+            </p>
+        </div>
+
+        
+
+
+        
+
+            <section class="test-section">
+
+                <div class="test-section-header">
+                    <div>
+                        <span class="section-kicker">
+                            Review required
+                        </span>
+
+                        <h2>Measures to check</h2>
+                    </div>
+
+                    <span class="test-count">
+                        1
+                    </span>
+                </div>
+
+                <p class="section-description">
+                    These measures have been triggered by newly identified
+                    items and should be reviewed by the OpenPrescribing
+                    development team.
+                </p>
+
+
+                
+
+                    <div class="test-card test-card-triggered">
+
+                        <div class="test-card-header">
+                            <a
+                                href="https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/nhse_bgts.json"
+                                class="test-title"
+                            >
+                                nhse_bgts.json
+                            </a>
+
+                            <span class="svg-icon test-question-icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="#f97306"
+                                    viewBox="0 0 16 16"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14"
+                                    />
+                                </svg>
+                            </span>
+                        </div>
+
+                        <p class="test-comments">
+                            Simple test to identify new products based on specified BNF code filter.
+                        </p>
+
+                        <div class="table-wrapper">
+                            <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>BNF_CODE</th>
+      <th>BNF_DESCRIPTION</th>
+      <th>CHEMICAL_SUBSTANCE_BNF_DESCR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0601060D0FHAAA0</td>
+      <td>ALLYbg testing strips</td>
+      <td>Glucose blood testing reagents</td>
+    </tr>
+    <tr>
+      <td>0601060D0FIAAA0</td>
+      <td>Gluco Ignite Glucose testing strips</td>
+      <td>Glucose blood testing reagents</td>
+    </tr>
+  </tbody>
+</table>
+                        </div>
+
+                    </div>
+
+                
+
+            </section>
+
+
+            <section class="test-section">
+
+                <div class="test-section-header">
+                    <div>
+                        <span class="section-kicker">
+                            No action identified
+                        </span>
+
+                        <h2>Tests passed</h2>
+                    </div>
+
+                    <span class="test-count test-count-passed">
+                        4
+                    </span>
+                </div>
+
+                
+
+                    <div class="passed-tests">
+
+                        
+
+                            <a
+                                class="passed-test"
+                                href="https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/cgm_sensors.json"
+                            >
+                                <span>cgm_sensors.json</span>
+
+                                <span class="svg-icon test-tick-icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="#15b01a"
+                                        viewBox="0 0 16 16"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"
+                                        />
+                                    </svg>
+                                </span>
+                            </a>
+
+                        
+
+                            <a
+                                class="passed-test"
+                                href="https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/edoxaban.json"
+                            >
+                                <span>edoxaban.json</span>
+
+                                <span class="svg-icon test-tick-icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="#15b01a"
+                                        viewBox="0 0 16 16"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"
+                                        />
+                                    </svg>
+                                </span>
+                            </a>
+
+                        
+
+                            <a
+                                class="passed-test"
+                                href="https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/lprubefacients.json"
+                            >
+                                <span>lprubefacients.json</span>
+
+                                <span class="svg-icon test-tick-icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="#15b01a"
+                                        viewBox="0 0 16 16"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"
+                                        />
+                                    </svg>
+                                </span>
+                            </a>
+
+                        
+
+                            <a
+                                class="passed-test"
+                                href="https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/opioidome.json"
+                            >
+                                <span>opioidome.json</span>
+
+                                <span class="svg-icon test-tick-icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="#15b01a"
+                                        viewBox="0 0 16 16"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"
+                                        />
+                                    </svg>
+                                </span>
+                            </a>
+
+                        
+
+                    </div>
+
+                
+
+            </section>
+
+
+            
+
+                <section class="test-section other-measures">
+
+                    <div class="test-section-header">
+                        <div>
+                            <span class="section-kicker">
+                                Configuration
+                            </span>
+
+                            <h2>Other measures</h2>
+                        </div>
+                    </div>
+
+                    
+
+                        <h3>Measures with testing disabled</h3>
+
+                        
+
+                            <p>
+                                <a href="https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/icsdose.json">
+                                    icsdose
+                                </a>
+                            </p>
+
+                        
+
+                    
+
+
+                    
+
+                        <h3>Measures without testing information</h3>
+
+                        
+
+                            <p>
+                                <a href="https://github.com/ebmdatalab/openprescribing/tree/main/openprescribing/measures/definitions/statinintensity.json">
+                                    statinintensity
+                                </a>
+                            </p>
+
+                        
+
+                    
+
+                </section>
+
+            
+
+        
+
+
+        <footer class="report-footer">
+            <a href="index.html">
+                Back to report list
+            </a>
+        </footer>
+
+    </div>
+</body>
+</html>
