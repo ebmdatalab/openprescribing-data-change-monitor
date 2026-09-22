@@ -1,31 +1,53 @@
-# OpenPrescribing English Prescribing Data Change Detector
+# OpenPrescribing Data Change Monitor
 
-The **OpenPrescribing English Prescribing Data Change Detector** is a tool designed to identify new or altered items in the [English Prescribing Data](https://www.nhsbsa.nhs.uk/prescription-data/prescribing-data/english-prescribing-data-epd) published by the NHS Business Services Authority.
+The **OpenPrescribing Data Change Monitor** identifies new or changed items in newly published prescribing data and highlights changes that may affect OpenPrescribing.
 
-## New Items Reports
+## Data Change Monitor
 
-Our [New Items Reports](https://htmlpreview.github.io/?https://github.com/ebmdatalab/openprescribing-epd-new/blob/main/reports/epd/changes/list_reports.html) provide detailed information in three key sections:
+<a href="https://ebmdatalab.github.io/openprescribing-data-change-monitor/" style="display: inline-block; padding: 12px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">Open the Data Change Monitor</a>
 
-1. **New or Changed Chemical Substance Descriptions**  
-   For example, a new drug being prescribed in primary care for the first time (mostly) or an existing chemical substance description changing (rarely)
+The monitor provides monthly reports highlighting new and changed items in prescribing data across primary and secondary care.
 
-2. **New or Changed BNF Codes**  
-   For example, a new drug or new formulation/strength of an existing drug being prescribed in primary care for the first time (mostly) or an existing BNF code changing (occasionally).
+## Primary care
 
-3. **New or Changed BNF Descriptions**  
-   For example, updated or modified descriptions of existing items.  
+### English Prescribing Data (EPD)
 
-### Secondary Care Medicines Data
+The [EPD change reports](https://ebmdatalab.github.io/openprescribing-data-change-monitor/epd/changes/list_reports.html) identify:
 
-Our [SCMD New Items Reports](https://htmlpreview.github.io/?https://github.com/ebmdatalab/openprescribing-epd-new/blob/main/reports/scmd/changes/list_reports_scmd.html) provide detailed information in two key sections:
+1. **New or changed chemical substance descriptions**
 
-1. **New Virtual Therapeutic Moieties (VTMs)**  
+   For example, a new drug being prescribed in primary care for the first time (mostly), or an existing chemical substance description changing (rarely).
+
+2. **New or changed BNF codes**
+
+   For example, a new drug or a new formulation or strength of an existing drug being prescribed in primary care for the first time (mostly), or an existing BNF code changing (occasionally).
+
+3. **New or changed BNF descriptions**
+
+   For example, updated or modified descriptions of existing items.
+
+The underlying [English Prescribing Data (EPD)](https://www.nhsbsa.nhs.uk/prescription-data/prescribing-data/english-prescribing-data-epd) is published by the NHS Business Services Authority.
+
+## Secondary care
+
+### Secondary Care Medicines Data (SCMD)
+
+The [SCMD change reports](https://ebmdatalab.github.io/openprescribing-data-change-monitor/scmd/changes/list_reports_scmd.html) identify:
+
+1. **New Virtual Therapeutic Moieties (VTMs)**
+
    For example, a new therapeutic moiety appearing in secondary care medicines data for the first time.
 
-2. **New Virtual Medicinal Products (VMPs)**  
+2. **New Virtual Medicinal Products (VMPs)**
+
    For example, a new medicinal product or formulation appearing in secondary care medicines data for the first time.
 
+## Internal monitoring
 
-## OpenPrescribing Tests
+The monitor also provides development-focused reports and checks used by the OpenPrescribing team to identify changes that may require review.
 
-Our [OpenPrescribing Tests Reports](https://htmlpreview.github.io/?https://github.com/ebmdatalab/openprescribing-epd-new/blob/main/reports/epd/tests/list_test_reports.html) enable us to identify new items that may impact our existing measures, helping to ensure the accuracy and relevance of our prescribing tools.
+These reports are designed for the OpenPrescribing team to support development, quality assurance and review. They are not intended as public-facing prescribing reports.
+
+### OpenPrescribing Testing Reviews
+
+The [testing review reports](https://ebmdatalab.github.io/openprescribing-data-change-monitor/epd/tests/list_test_reports.html) check newly identified items in English Prescribing Data against OpenPrescribing measures to identify measures that may require review.
