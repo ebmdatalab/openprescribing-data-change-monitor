@@ -4,7 +4,7 @@ The **OpenPrescribing Data Change Monitor** identifies new or changed items in n
 
 ## Data Change Monitor
 
-<a href="https://ebmdatalab.github.io/openprescribing-data-change-monitor/" style="display: inline-block; padding: 12px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">Open the Data Change Monitor</a>
+[**Open the Data Change Monitor →**](https://ebmdatalab.github.io/openprescribing-data-change-monitor/)
 
 The monitor provides monthly reports highlighting new and changed items in prescribing data across primary and secondary care.
 
