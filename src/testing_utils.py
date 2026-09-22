@@ -332,15 +332,12 @@ def write_monthly_testing_report_html(
     )
 
     # URL for the shared stylesheet
-    stylesheet_url = (
-        "https://raw.githubusercontent.com/"
-        "ebmdatalab/openprescribing-data-change-monitor/main/assets/report.css"
-    )
+    stylesheet_url = "../../assets/report.css"
 
     # Render the template
     report = template.render(
         date=date,
-        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/op_logo.png",
+        logo_url="../../assets/op_logo.png",
         stylesheet_url=stylesheet_url,
         reports_index_url="index.html",
         january_alert=jan_alert,
@@ -404,12 +401,9 @@ def generate_list_reports_html():
     # Render the template
     html_content = template.render(
         title="English Prescribing Data - Monthly Test Reports",
-        logo_url="https://raw.githubusercontent.com/ebmdatalab/openprescribing-data-change-monitor/main/assets/op_logo.png",
+        logo_url="../../assets/op_logo.png",
         logo_alt="OpenPrescribing logo",
-        stylesheet_url=(
-            "https://raw.githubusercontent.com/"
-            "ebmdatalab/openprescribing-data-change-monitor/main/assets/report.css"
-        ),
+        stylesheet_url="../../assets/report.css",
         reports=reports,
     )
 
