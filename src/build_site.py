@@ -41,9 +41,9 @@ def copy_directory_contents(source_dir, destination_dir):
             shutil.copy2(source, destination)
 
 
-def read_csv_html(path):
+def read_csv_html(path, dtype=None):
     """Read a CSV file and return its HTML table."""
-    dataframe = pd.read_csv(path)
+    dataframe = pd.read_csv(path, dtype=dtype)
 
     return dataframe.to_html(
         index=False,
@@ -194,10 +194,18 @@ def render_scmd_report(date):
         stylesheet_url="../../assets/report.css",
         reports_index_url="index.html",
         vtms=read_csv_html(
-            required_files["vtms"]
+            required_files["vtms"],
+            dtype={
+                "vtm_id": "string",
+                "vmp_snomed_code": "string",
+            },
         ),
         vmps=read_csv_html(
-            required_files["vmps"]
+            required_files["vmps"],
+            dtype={
+                "vtm_id": "string",
+                "vmp_snomed_code": "string",
+            },
         ),
     )
 
