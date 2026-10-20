@@ -137,6 +137,7 @@ def render_epd_report(date):
     return template.render(
         date=date,
         logo_url="../../assets/op_logo.png",
+        favicon_url="../../assets/favicon.png",
         stylesheet_url="../../assets/report.css",
         reports_index_url="index.html",
         january_alert=get_january_alert(date),
@@ -191,6 +192,7 @@ def render_scmd_report(date):
     return template.render(
         date=date,
         logo_url="../../assets/oph_logo.png",
+        favicon_url="../../assets/favicon.png",
         stylesheet_url="../../assets/report.css",
         reports_index_url="index.html",
         vtms=read_csv_html(
@@ -326,6 +328,7 @@ def build_index_page():
     html = template.render(
         stylesheet_url="assets/report.css",
         logo_url="assets/op_logo.png",
+        favicon_url="assets/favicon.png",
     )
 
     output_path = os.path.join(
@@ -428,6 +431,7 @@ def build_report_list_page(
         logo_url=(
             f"{asset_prefix}{logo_filename}"
         ),
+        favicon_url=f"{asset_prefix}favicon.png",
         logo_alt=logo_alt,
         stylesheet_url=(
             f"{asset_prefix}report.css"
