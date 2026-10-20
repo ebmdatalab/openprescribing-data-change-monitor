@@ -1,3 +1,4 @@
+
 name: OpenPrescribing Data Change Monitor
 
 on:
@@ -11,83 +12,116 @@ on:
         options:
           - auto
           - force
+
   schedule:
-    - cron: "0 10 * * *" # Runs at 10:00 AM GMT every day
+    - cron: "0 10 * * *" # Runs at 10:00 AM UTC every day
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
-  run-script:
+
+  # --------------------------------------------------
+  # Job 1: Check and update reports
+  # --------------------------------------------------
+
+  update-reports:
     runs-on: ubuntu-latest
+
+    outputs:
+      changed: ${{ steps.push.outputs.pushed }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Update EPD reports
+        env:
+          BQ_SERVICE_ACCOUNT_KEY: ${{ secrets.BQ_SERVICE_ACCOUNT_KEY }}
+        run: >
+          python src/main.py
+          --mode ${{ inputs.mode || 'auto' }}
+          --dataset epd
+
+      - name: Update SCMD reports
+        env:
+          BQ_SERVICE_ACCOUNT_KEY: ${{ secrets.BQ_SERVICE_ACCOUNT_KEY }}
+        run: >
+          python src/main.py
+          --mode ${{ inputs.mode || 'auto' }}
+          --dataset scmd
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit changes
+        id: commit
+        run: |
+          git add .
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "Reports updated"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Push changes
+        id: push
+        if: steps.commit.outputs.changed == 'true'
+        run: |
+          git push
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+
+  # --------------------------------------------------
+  # Job 2: Deploy GitHub Pages (only when updated)
+  # --------------------------------------------------
+
+  deploy-pages:
+    needs: update-reports
+
+    if: needs.update-reports.outputs.changed == 'true'
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
 
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v5
+      - name: Checkout updated repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref_name }}
 
-    - name: Set up Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: '3.12'
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Update EPD reports
-      env:
-        BQ_SERVICE_ACCOUNT_KEY: ${{ secrets.BQ_SERVICE_ACCOUNT_KEY }}
-      run: >
-        python src/main.py
-        --mode ${{ github.event.inputs.mode || 'auto' }}
-        --dataset epd
-
-    - name: Update SCMD reports
-      env:
-        BQ_SERVICE_ACCOUNT_KEY: ${{ secrets.BQ_SERVICE_ACCOUNT_KEY }}
-      run: >
-        python src/main.py
-        --mode ${{ github.event.inputs.mode || 'auto' }}
-        --dataset scmd
-
-    - name: Configure Git
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-
-    - name: Commit changes
-      id: commit
-      run: |
-        git add .
-
-        if git diff --cached --quiet; then
-          echo "No changes to commit"
-          echo "changed=false" >> "$GITHUB_OUTPUT"
-        else
-          git commit -m "Reports updated"
-          echo "changed=true" >> "$GITHUB_OUTPUT"
-        fi
-
-    - name: Push changes
-      if: steps.commit.outputs.changed == 'true'
-      run: git push
-      env:
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Upload GitHub Pages artifact
-      if: steps.commit.outputs.changed == 'true'
-      uses: actions/upload-pages-artifact@v5
-      with:
-        path: site
-
-    - name: Deploy GitHub Pages
-      if: steps.commit.outputs.changed == 'true'
-      id: deployment
-      uses: actions/deploy-pages@v5
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
